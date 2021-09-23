@@ -34,12 +34,15 @@
 									<i class="fa fa-plus-circle bigger-110 purple"></i>
 							</span>
 							</a>
-							<button id="btnDelete" type="button"
+							<form action="/api/deleteCategory" method="POST">
+							<input type="hidden" name="ids" id="ids" >
+								<button id="btnDelete" type="submit"
 								class="dt-button buttons-html5 btn btn-white btn-primary btn-bold"
-								data-toggle="tooltip" title='Xóa danh mục'>
+								data-toggle="tooltip" title='Xóa danh mucj'>
 								<span> <i class="far fa-trash-alt"></i>
 								</span>
 							</button>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -115,9 +118,9 @@
 		var ids = $('tbody input[type=checkbox]:checked').map(function () {
             return $(this).val();
         }).get();
-		
+		document.querySelector("#ids").value = ids;
 	
-		deleteNew(ids);
+	//	deleteNew(ids);
 	});
 	function deleteNew(data) {
         $.ajax({

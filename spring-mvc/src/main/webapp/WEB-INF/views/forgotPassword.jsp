@@ -25,7 +25,7 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <form action="j_spring_security_check" method="post">
+                    <form action="changepassword" method="post">
                         <h3 class="register-heading">Quên mật khẩu</h3>
                         
                         <div class="row register-form">

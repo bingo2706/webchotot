@@ -13,7 +13,7 @@
 	<link href="<c:url value='/template/web/css/input.css'/>" rel="stylesheet" type="text/css">
 		<div style="padding-top: 140px;" class="container-contact100">
     <div class="wrap-contact100">
-        <form:form modelAttribute="model" class="contact100-form validate-form" id="formSubmit">
+        <form:form modelAttribute="model" action="/api/createDetail" method="POST" class="contact100-form validate-form" id="formSubmit">
              <c:if test="${empty model.id }">
             <span class="contact100-form-title">
                 Thêm chi tiết sản phẩm
@@ -63,7 +63,8 @@
                 <span asp-validation-for="Length" class="text-danger"></span>
             </div>
          <input type="hidden" value="${model.id}" id="id" name="id"/>
-		
+         <input type="hidden" value="${model.productId}" id="produtId" name="productId"/>
+		 <input type="hidden" value="web" name="type"/>
           
             <div class="container-contact100-form-btn">
                 <div class="wrap-contact100-form-btn">
@@ -100,20 +101,7 @@
 	    console.log(dataArray);
     });
 	 $('#btnAddOrUpdateNew').click(function (e) {
-	        e.preventDefault();
-	        var data = {};
-	        var formData = $('#formSubmit').serializeArray();
-	        $.each(formData, function (i, v) {
-	            data[""+v.name+""] = v.value;
-	        });
-	      data["base64"] = dataArray.base64;
-	      data["thumbnail"] = dataArray.name;
-	      
-	   
-	      updateNew(data);
-	        
 	       
-	        console.log(data);
 	    });
 	 function addNew(data) {
 	        $.ajax({

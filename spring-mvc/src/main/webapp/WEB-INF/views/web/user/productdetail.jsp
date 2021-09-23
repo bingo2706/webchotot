@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
+	<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="f" %>
 <c:url var="APIurl" value="/api/detail"/>
 <c:url var="NewURL" value="/trang-chu"/>
 <c:url var="APIurlImg" value="/api/img"/>
@@ -34,14 +35,14 @@
  		<c:forEach var="img" items="${item.listImg}">
 		<img class="img-${img.id }" onclick="myFunction1(${img.id})" alt="photo${img.id }" style="width:50px; height:50px;" src="<c:url value='/template/admin/thumbnail/${img.thumbnail }'/>">				
 		</c:forEach>
-		<td>${item.price}</td>
-		<td>${item.originalPrice}</td>
+		<td style="width:18%;"><f:formatNumber value="${item.price}" type="currency"/> đ/tháng</td>
+		<td style="width:18%;"><f:formatNumber value="${item.originalPrice}" type="currency"/> đ/tháng</td>
 		<td>${item.acreage}</td>
         <td>${item.stock}</td>
 	
  		<td style="width:15%;">
  		<a href="<c:url value="/user/productdetail/update?id=${item.id }"/>">Cập nhật</a>
- 		<a href="<c:url value="/user/product/addImg?id=${item.id }"/>">Thêm ảnh</a>	
+ 		<a href="<c:url value="/user/product/addImg?id=${item.id }&pdId=${model.id }"/>">Thêm ảnh</a>	
  		</td>
  	</tr>
   </c:forEach>
@@ -51,8 +52,19 @@
 </table>
   <security:authentication property="principal" var="user"/>
  <div class="box-button">
-    <button id="btnDelete" class="btn btn-red">Xóa</button>
-    <button style="margin-left:10px;" id="btnDeleteImg" class="btn btn-orange">Xóa ảnh</button>
+ <form action="/api/deleteDetail" method="POST">
+ 	<input type="hidden" name="type" value="web">
+ 	<input type="hidden" name="ids" id="ids" >
+ 	<input type="hidden" name="productId" value="${model.id }">
+   <button id="btnDelete" class="btn btn-red">Xóa</button>
+ </form>
+  <form action="/api/deleteImg" method="POST">
+  <input type="hidden" name="type" value="web">
+  <input type="hidden" name="productId" value="${model.id }">
+  <input type="hidden" name="ids" id="idsIMG" >
+   <button style="margin-left:10px;" id="btnDeleteImg" class="btn btn-orange">Xóa ảnh</button>
+  </form>
+   
  	<a href="<c:url value="/user/product?id=${user.id }"/>" style="margin-left:10px;" class="btn btn-blue">Quay lại</a>
  </div>
   </div>
@@ -62,9 +74,9 @@
 		var ids = $('tbody input[type=checkbox]:checked').map(function () {
           return $(this).val();
       }).get();
-		console.log(ids);
+		document.querySelector("#ids").value = ids;
 	
-		deleteNew(ids);
+	//	deleteNew(ids);
 	});
 	
 	function deleteNew(data) {
@@ -95,7 +107,7 @@
 		 console.log(numberArr);
 	}
 	$("#btnDeleteImg").click(function() {
-		deleteIMG(numberArr);
+		document.querySelector("#idsIMG").value = numberArr
 	});
 	function deleteIMG(data) {
         $.ajax({

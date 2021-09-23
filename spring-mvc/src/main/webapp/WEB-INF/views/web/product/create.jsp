@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
+ <%@ page import="com.laptrinhjavaweb.util.SecurityUtils" %>
 <c:url var="APIurl" value="/api/new"/>
 <c:url var="NewURL" value="/trang-chu"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -13,7 +14,7 @@
 	<link href="<c:url value='/template/web/css/input.css'/>" rel="stylesheet" type="text/css">
 		<div style="padding-top: 140px;" class="container-contact100">
     <div class="wrap-contact100">
-        <form:form modelAttribute="model" class="contact100-form validate-form" id="formSubmit">
+        <form:form modelAttribute="model" action="/api/createProduct" method="POST" class="contact100-form validate-form" id="formSubmit">
              <c:if test="${empty model.id }">
             <span class="contact100-form-title">
                 Tạo sản phẩm
@@ -44,7 +45,9 @@
             <c:if test="${empty model.id }">
               <div class="wrap-input100 validate-input">
                 <span class="label-input100">Ảnh đại diện</span>
-                <input class="input100" asp-for="ThumbnailImage" id="uploadImage" name="thumbnail" type="file">
+                <input class="input100" asp-for="ThumbnailImage" id="uploadImage"  type="file">
+                <input type="hidden" class="form-control" id="thumbnail" name ="thumbnail" >
+   				 <input type="hidden" class="form-control" id="base64" name="base64">
                 <span class="focus-input100"></span>
                 <span asp-validation-for="ThumbnailImage" class="text-danger"></span>
             </div>
@@ -120,8 +123,14 @@
                 <span asp-validation-for="Length" class="text-danger"></span>
             </div>
           </c:if>
+          <c:if test="${not empty model.id }">
 		 <input type="hidden" value="${model.id}" id="id" name="id"/>
-          
+		 </c:if>
+           <input type="hidden" value="1" id="status" name="status"/>
+             <input type="hidden" value="web" name="type"/>
+              <security:authorize access="isAuthenticated()">
+		         <input type="hidden" id="userId" name = "userId" value="<%=SecurityUtils.getPrincipal().getId() %>">
+		          </security:authorize>
             <div class="container-contact100-form-btn">
                 <div class="wrap-contact100-form-btn">
                     <div class="contact100-form-bgbtn"></div>
@@ -163,22 +172,10 @@
 	    console.log(dataArray);
     });
 	 $('#btnAddOrUpdateNew').click(function (e) {
-	        e.preventDefault();
-	        var data = {};
-	        var formData = $('#formSubmit').serializeArray();
-	        $.each(formData, function (i, v) {
-	            data[""+v.name+""] = v.value;
-	        });
-	      data["base64"] = dataArray.base64;
-	      data["thumbnail"] = dataArray.name;
-	      data["status"] = 1;
-	         var id = $('#id').val();
-	         if (id == "") {
-	            addNew(data);
-	        } else {
-	            updateNew(data);
-	        }    
-	        console.log(data);
+		 var name = dataArray.name;
+		 var base64 = dataArray.base64;
+		 document.querySelector("#thumbnail").value = name;
+		 document.querySelector("#base64").value = base64;
 	    });
 	 function addNew(data) {
 	        $.ajax({

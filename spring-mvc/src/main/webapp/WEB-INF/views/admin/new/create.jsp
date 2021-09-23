@@ -34,7 +34,7 @@
      	
      
      
-      		<form:form style="margin: 40px; width:40%;" modelAttribute="model" id="formSubmit">
+      		<form:form style="margin: 40px; width:40%;" action="/api/createProduct" method="POST" modelAttribute="model" id="formSubmit">
   <div class="form-group">
     <label for="title">Tên bài viết</label>
     <input type="text" class="form-control" id="title" name="title" value="${model.title }" >
@@ -50,7 +50,9 @@
   <c:if test="${empty model.id }">
   	  <div class="form-group">
     <label for="thumbnail">Hình đại diện</label>
-    <input type="file" class="form-control" id="uploadImage" name="thumbnail" value="${model.thumbnail }" >
+    <input type="file" class="form-control" id="uploadImage"  >
+    <input type="hidden" class="form-control" id="thumbnail" name ="thumbnail" >
+    <input type="hidden" class="form-control" id="base64" name="base64">
   </div>
   </c:if>
 
@@ -98,7 +100,12 @@
   <c:if test="${empty model.id }">
   		<button type="submit" class="btn btn-primary" id="btnAddOrUpdateNew">Thêm bài viết</button>
   </c:if>
+  <c:if test="${not empty model.id }">
    <input type="hidden" value="${model.id}" id="id" name="id"/>
+   </c:if>
+   <input type="hidden" value="1" id="status" name="status"/>
+   <input type="hidden" value="admin" name="type"/>
+   
 </form:form>
 </div>
 	<script type="text/javascript">
@@ -118,22 +125,10 @@
 	    console.log(dataArray);
     });
 	 $('#btnAddOrUpdateNew').click(function (e) {
-	        e.preventDefault();
-	        var data = {};
-	        var formData = $('#formSubmit').serializeArray();
-	        $.each(formData, function (i, v) {
-	            data[""+v.name+""] = v.value;
-	        });
-	      data["base64"] = dataArray.base64;
-	      data["thumbnail"] = dataArray.name;
-	      data["status"] = 1;
-	         var id = $('#id').val();
-	        if (id == "") {
-	            addNew(data);
-	        } else {
-	            updateNew(data);
-	        }   
-	        console.log(data);
+		 var name = dataArray.name;
+		 var base64 = dataArray.base64;
+		 document.querySelector("#thumbnail").value = name;
+		 document.querySelector("#base64").value = base64;
 	    });
 	 function addNew(data) {
 	        $.ajax({

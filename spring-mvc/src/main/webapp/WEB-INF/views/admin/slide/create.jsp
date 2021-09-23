@@ -31,19 +31,21 @@
             </ul><!-- /.breadcrumb -->
         </div>
      
-      		<form:form style="margin: 40px; width:40%;" modelAttribute="model" id="formSubmit">
+      		<form:form style="margin: 40px; width:40%;" action="/api/createSlide" method="POST" modelAttribute="model" id="formSubmit">
   <div class="form-group">
     <label for="title">Tên trình chiếu</label>
-    <input type="text" class="form-control" id="name" name="name" value="${model.name }" >
+    <input type="text" class="form-control" id="name" name="name"  >
   
   </div>
  <div class="form-group">
     <label for="shortDescription">Mô tả</label>
-    <input type="text" class="form-control" id="description" name="description" value="${model.description }" >
+    <input type="text" class="form-control" id="description" name="description"  >
   </div>
   <div class="form-group">
     <label for="thumbnail">Hình đại diện</label>
-    <input type="file" class="form-control" id="uploadImage" name="thumbnail" value="${model.thumbnail }" >
+    <input type="file" class="form-control" id="uploadImage" >
+    <input type="hidden" class="form-control" id="thumbnail" name ="thumbnail" >
+    <input type="hidden" class="form-control" id="base64" name="base64">
   </div>
 
   <c:if test="${not empty model.id }">
@@ -52,7 +54,7 @@
   <c:if test="${empty model.id }">
   		<button type="submit" class="btn btn-primary" id="btnAddOrUpdateNew">Thêm trình chiếu</button>
   </c:if>
-   <input type="hidden" value="${model.id}" id="id" name="id"/>
+  
    <input type="hidden" value="${model.productId}" id="productId" name="productId"/>
    <input type= "hidden" value = 1 id="status" name = "status">
 </form:form>
@@ -80,52 +82,12 @@
 	    console.log(dataArray);
     });
 	 $('#btnAddOrUpdateNew').click(function (e) {
-	        e.preventDefault();
-	        var data = {};
-	        var formData = $('#formSubmit').serializeArray();
-	        $.each(formData, function (i, v) {
-	            data[""+v.name+""] = v.value;
-	        });
-	      data["base64"] = dataArray.base64;
-	      data["thumbnail"] = dataArray.name;
-	         var id = $('#id').val();
-	        if (id == "") {
- 	            addNew(data); 
-	        } else {
-	            updateNew(data);
-	        } 
-	        console.log(data);
+		 var name = dataArray.name;
+		 var base64 = dataArray.base64;
+		 document.querySelector("#thumbnail").value = name;
+		 document.querySelector("#base64").value = base64;
 	    });
-	 function addNew(data) {
-	        $.ajax({
-	            url: '${APIurl}',
-	            type: 'POST',
-	            contentType: 'application/json',
-	            data: JSON.stringify(data),
-	            dataType: 'json',
-	            success: function (result) {
-	            	window.location.href = "${NewURL}?page=1&limit=5";
-	            },
-	            error: function (error) {
-	            	window.location.href = "${NewURL}?page=1&limit=5";
-	            }
-	        });
-	    }
-	    function updateNew(data) {
-	        $.ajax({
-	            url: '${APIurl}',
-	            type: 'PUT',
-	            contentType: 'application/json',
-	            data: JSON.stringify(data),
-	            dataType: 'json',
-	            success: function (result) {
-	            	window.location.href = "${NewURL}?page=1&limit=5";
-	            },
-	            error: function (error) {
-	            	window.location.href = "${NewURL}?page=1&limit=5";
-	            }
-	        });
-	    }
+
 	</script>
 </body>
 </html>

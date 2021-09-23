@@ -27,6 +27,7 @@ public class ProductDetailConverter {
 		result.setOriginalPrice(entity.getOriginalPrice());
 		result.setStock(entity.getStock());
 		result.setName(entity.getName());
+		result.setProductId(entity.getProduct().getId());
 		List<ProductImageDTO> listImg = new ArrayList<>();
 		for(ProductImageEntity item : entity.getProductimage()){
 			ProductImageDTO dto = productImageConverter.toDto(item);

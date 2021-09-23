@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
+ <%@ page import="com.laptrinhjavaweb.util.SecurityUtils" %>
 <c:url var="APIurl" value="/api/new"/>
 <c:url var="NewURL" value="/trang-chu"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -43,7 +44,16 @@
 </table>
   <security:authentication property="principal" var="user"/>
  <div class="box-button">
+ 	<form action="/api/deleteProduct" method="POST">
+ 	<input type="hidden" name="ids" id="ids" >
+ 	<input type="hidden" name="type" value="web" >
+ 	<security:authorize access="isAuthenticated()">
+		         <input type="hidden" id="userId" name = "userId" value="<%=SecurityUtils.getPrincipal().getId() %>">
+		          </security:authorize>
  	<button id="btnDelete" class="btn btn-red">Xóa</button>
+ 	
+ 	</form>
+ 	
  	<a href="<c:url value="/user/info?id=${user.id }"/>" style="margin-left:10px;" class="btn btn-blue">Quay lại</a>
  </div>
   </div>
@@ -56,9 +66,9 @@
 		var ids = $('tbody input[type=checkbox]:checked').map(function () {
           return $(this).val();
       }).get();
-		
+		document.querySelector("#ids").value = ids;	
 	
-		deleteNew(ids);
+	//	deleteNew(ids);
 	});
 	function deleteNew(data) {
       $.ajax({

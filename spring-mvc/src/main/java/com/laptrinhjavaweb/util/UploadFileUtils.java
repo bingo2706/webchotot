@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UploadFileUtils {
-	public final String root = "C:/Users/ASUS/git/webChotot-Springmvc/spring-mvc-template-bootstrap-spring-mvc/src/main/webapp/template/admin";
+	public final String root = "C:/Users/ASUS/git/webchotot/spring-mvc/src/main/webapp/template/admin";
 		
 	    public void writeOrUpdate(byte[] bytes, String path) {
 	        File file = new File(StringUtils.substringBeforeLast(root + path, "/"));

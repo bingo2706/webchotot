@@ -1,5 +1,7 @@
 package com.laptrinhjavaweb.controller.web;
 
+import java.util.Base64;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,11 +25,14 @@ import com.laptrinhjavaweb.dto.ProductDTO;
 import com.laptrinhjavaweb.dto.ProductDetailDTO;
 import com.laptrinhjavaweb.dto.SlideDTO;
 import com.laptrinhjavaweb.dto.UserDTO;
+import com.laptrinhjavaweb.repository.SlideRepository;
 import com.laptrinhjavaweb.service.ICategoryService;
 import com.laptrinhjavaweb.service.INewService;
 import com.laptrinhjavaweb.service.IRoleService;
 import com.laptrinhjavaweb.service.ISlideService;
 import com.laptrinhjavaweb.service.IUserService;
+import com.laptrinhjavaweb.util.FormUtil;
+import com.laptrinhjavaweb.util.UploadFileUtils;
 
 @Controller(value = "homeControllerOfWeb")
 public class HomeController {
@@ -48,6 +53,12 @@ public class HomeController {
 	
 	@Autowired
 	MailSender mailSender;
+	
+	@Autowired
+	private SlideRepository slideRepository;
+	
+	@Autowired
+	private UploadFileUtils uploadFileUtils;
 	
 	@RequestMapping(value = "/trang-chu", method = RequestMethod.GET)
 	public ModelAndView homePage(@RequestParam("page") int page, 
@@ -195,6 +206,16 @@ public class HomeController {
 		mailMessage.setSubject(subject);
 		mailMessage.setText(content);
 		mailSender.send(mailMessage);
-		
 	}
+	@RequestMapping(value = "/forgotpassword", method = RequestMethod.GET)
+	public ModelAndView forgotPasswordPage(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("forgotPassword");	
+		return mav;
+	}
+	@RequestMapping(value = "/changepassword", method = RequestMethod.POST)
+	public ModelAndView changepassword(HttpServletRequest request) {
+
+		return new ModelAndView("redirect:/trang-chu?page=1&limit=10");
+	}
+	
 }

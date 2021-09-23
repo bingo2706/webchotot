@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ include file="/common/taglib.jsp" %>
+	<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="f" %>
 <!DOCTYPE html>
 
 <html>
@@ -18,7 +19,7 @@
             <div class="owl-carousel owl-theme slider">
             <c:forEach var="item" items="${slides.listResult }">
             		 <div class="item">
-                    <a href="<c:url value='/product/detail?id=${item.productId }'/>"><img src="<c:url value='/template/admin/thumbnail/${item.thumbnail }'/>" alt="photo"></a>
+                    <a href="<c:url value='/product/detail?id=${item.productId }'/>"><img style="width: 947.2px;height: 236.8px;object-fit: cover;" src="<c:url value='/template/admin/thumbnail/${item.thumbnail }'/>" alt="photo"></a>
                 </div>
             </c:forEach>
                
@@ -31,7 +32,7 @@
            <c:forEach var="item" items="${categories.listResult }">
            	 <div class="category-item">
                    <a href="<c:url value='/product-index?categoryID=${item.id}'/>">
-                       <img src="<c:url value='/template/admin/thumbnail/${item.thumbnail }'/>" alt="">
+                       <img style="border-radius: 30%;" src="<c:url value='/template/admin/thumbnail/${item.thumbnail }'/>" alt="">
                        <span>${item.name }</span>
                    </a>
                </div>
@@ -80,8 +81,8 @@
                         <div class="box-item__caption">
                             <p class="box-item__name">${item.title }</p>
                             <p class="box-item__size">${item.listDetail.get(0).acreage } m2</p>
-                            <p style="text-decoration: line-through;color: #8d8a8a; font-weight: 500; font-size: 1.2rem;" class="box-item-oriPrice">${item.listDetail.get(0).originalPrice } vnđ/tháng</p>
-                            <p class="box-item__price">${item.listDetail.get(0).price } vnđ/tháng</p>
+                            <p style="text-decoration: line-through;color: #8d8a8a; font-weight: 500; font-size: 1.2rem;" class="box-item-oriPrice"><f:formatNumber value="${item.listDetail.get(0).originalPrice }" type="currency"/> đ/tháng</p>
+                            <p class="box-item__price"><f:formatNumber value="${item.listDetail.get(0).price }" type="currency"/> đ/tháng</p>
                         </div>
                     </div>
                 </div>

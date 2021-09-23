@@ -13,7 +13,7 @@
 	<link href="<c:url value='/template/web/css/input.css'/>" rel="stylesheet" type="text/css">
 		<div style="padding-top: 140px;" class="container-contact100">
     <div class="wrap-contact100">
-        <form:form modelAttribute="model" class="contact100-form validate-form" id="formSubmit">
+        <form:form modelAttribute="model" action="/api/createDetail" method="POST" class="contact100-form validate-form" id="formSubmit">
              <c:if test="${empty model.id }">
             <span class="contact100-form-title">
                 Thêm chi tiết sản phẩm
@@ -34,7 +34,9 @@
             </div>
               <div class="wrap-input100 validate-input">
                 <span class="label-input100">Ảnh đại diện</span>
-                <input class="input100" asp-for="ThumbnailImage" id="uploadImage" name="thumbnail" type="file">
+                <input class="input100" asp-for="ThumbnailImage" id="uploadImage" type="file">
+                 <input type="hidden" class="form-control" id="thumbnail" name ="thumbnail" >
+   				 <input type="hidden" class="form-control" id="base64" name="base64">
                 <span class="focus-input100"></span>
                 <span asp-validation-for="ThumbnailImage" class="text-danger"></span>
             </div>
@@ -68,8 +70,8 @@
                 <span class="focus-input100"></span>
                 <span asp-validation-for="Length" class="text-danger"></span>
             </div>
-         
-		
+          <input type="hidden"  id="productId" name="productId"/>
+		 <input type="hidden"  value="web" name="type"/>
           
             <div class="container-contact100-form-btn">
                 <div class="wrap-contact100-form-btn">
@@ -102,6 +104,7 @@
         return thamSo.get(nameThamSo);
     }
     var productid = (getThamSo("id"));
+    document.querySelector("#productId").value = productid;
 	$('#uploadImage').change(function () {
 		
 	    var files = $(this)[0].files[0];
@@ -117,21 +120,11 @@
 	    console.log(dataArray);
     });
 	 $('#btnAddOrUpdateNew').click(function (e) {
-	        e.preventDefault();
-	        var data = {};
-	        var formData = $('#formSubmit').serializeArray();
-	        $.each(formData, function (i, v) {
-	            data[""+v.name+""] = v.value;
-	        });
-	      data["base64"] = dataArray.base64;
-	      data["thumbnail"] = dataArray.name;
-	      data["productId"] = productid;
-	   
-	         var id = $('#id').val();
-	        
-	            addNew(data);
-	       
-	        console.log(data);
+		 var name = dataArray.name;
+		 var base64 = dataArray.base64;
+		 document.querySelector("#thumbnail").value = name;
+		 document.querySelector("#base64").value = base64;
+	 
 	    });
 	 function addNew(data) {
 	        $.ajax({

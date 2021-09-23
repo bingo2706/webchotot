@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@include file="/common/taglib.jsp"%>
     <%@ page import="com.laptrinhjavaweb.util.SecurityUtils" %>
+    	<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="f" %>
     <c:url var="APIurl" value="/api/comment"/>
     <c:url var="NewURL" value="/product/detail"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -49,7 +50,7 @@
               <div class="box-description">
                   <p class="box-description__name">${model.title }</p>
                   <p class="box-description__name">${item.name }</p>
-                  <span class="box-description__price">${item.price }
+                  <span class="box-description__price"><f:formatNumber value="${item.price }" type="currency"/> đ/tháng
                     </span>
                     <span class="box-description__dtich"> - ${item.acreage } m2</span>
                     <p class="box-description__address">
@@ -67,7 +68,7 @@
               <span class="box-description__s"><img class="icon-detail" src="https://static.chotot.com/storage/icons/logos/ad-param/size.png" alt=""> Diện tích: ${item.acreage } m2</span>
               <div style="margin-top: 20px;">
                 <span style="font-size: 1.4rem;" ><img class="icon-detail" src="https://static.chotot.com/storage/icons/logos/ad-param/furnishing_rent.png" alt=""> Tình trạng nội thất: Nội thất đầy đủ</span>
-                <span style="font-size: 1.4rem; margin-left: 40px;"> <img class="icon-detail" src="https://static.chotot.com/storage/icons/logos/ad-param/deposit.png" alt=""> Số tiền cọc: ${item.price } vnđ</span>
+                <span style="font-size: 1.4rem; margin-left: 40px;"> <img class="icon-detail" src="https://static.chotot.com/storage/icons/logos/ad-param/deposit.png" alt=""> Số tiền cọc: <f:formatNumber value="${item.price }" type="currency"/> đ/tháng</span>
               </div>
               </div>
               
@@ -121,7 +122,7 @@
         
       </div>	
 			</div>
-      		<form id="formSubmit">
+      		<form id="formSubmit" action="/api/createCMT" method="POST">
       			 <div class="CommentBox_commentWrapper__1DJa6">
       			 <security:authorize access="isAuthenticated()">
       			 <security:authentication property="principal" var="user"/>
@@ -135,6 +136,7 @@
 		         <input type="hidden" id="userId" name = "userId" value="<%=SecurityUtils.getPrincipal().getId() %>">
 		          </security:authorize>
                  <input type="hidden" id="productId" name = "productId" value=${model.id }>
+                 <input type="hidden" id="content" name = "content">
       		</form>
       	  
       </div>
@@ -170,7 +172,10 @@
                 </div>
       </c:forEach>
       </div>
-    
+    <form id="deleteCmtForm" action="/api/deleteCMT" method="POST">
+    <input type="hidden" id="idCMT" name="id">
+    <input type="hidden" id="productIdOfCMT" value=${model.id } name="productId">
+    </form>
        
       
       
@@ -253,15 +258,10 @@
           	
           }
        $('#button-save').click(function (e) {
-           e.preventDefault();
-           var data = {};
-           var formData = $('#formSubmit').serializeArray();
-           $.each(formData, function (i, v) {
-               data[""+v.name+""] = v.value;
-           });
+         
            var content = document.querySelector(".input-cmt").textContent;
-           data["content"] = content;
-           addNew(data);
+           document.querySelector("#content").value = content;
+    //       addNew(data);
            
        });
        $('.edit-button').click(function (e) {
@@ -296,7 +296,7 @@
                	localStorage.setItem("flag", 1);
                	/* window.location.href = "${NewURL}?id="+ ${model.id }; */
                	var html1 = document.querySelector("#cmt-box").innerHTML
-               	var html = `  <div class="Comment_detailComment__2QNx3">
+               	var html = `   <div class="Comment_detailComment__2QNx3">
                     <div class="Comment_avatarWrap__3B6nj">
                     <img class="Comment_avatar__2AN5T imgCmt" alt="T">
                 </div>
@@ -354,8 +354,9 @@
            });
        }
    	function deleteFunc(id){
-		
-		deleteNew(id);
+   		document.getElementById("idCMT").value = id;
+   		document.getElementById("deleteCmtForm").submit();
+	//	deleteNew(id);
 	}
 	function deleteNew(id) {
         $.ajax({

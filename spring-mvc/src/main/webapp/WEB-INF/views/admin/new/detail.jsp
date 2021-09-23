@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
+<%@ taglib uri="http://java.sun.com/jstl/fmt_rt" prefix="f" %>
 <c:url var="NewURL" value="/admin-new"/>
 <c:url var="APIurl" value="/api/detail"/>
 <c:url var="APIurlImg" value="/api/img"/>
@@ -35,18 +36,27 @@
 									<i class="fa fa-plus-circle bigger-110 purple"></i>
 							</span>
 							</a>
-							<button id="btnDelete" type="button"
+							<form action="/api/deleteDetail" method="POST">
+							<input type="hidden" name="ids" id="ids" >
+							<input type="hidden" value="admin" name="type"/>
+								<button id="btnDelete" type="submit"
 								class="dt-button buttons-html5 btn btn-white btn-primary btn-bold"
 								data-toggle="tooltip" title='Xóa chi tiết'>
 								<span> <i class="far fa-trash-alt"></i>
 								</span>
 							</button>
-							<button style="background-color: #c82333;border-color: #bd2130;" id="btnDeleteImg" type="button"
+							</form>
+							<form action="/api/deleteImg" method="POST">
+							<input type="hidden" name="ids" id="idsIMG" >
+								<input type="hidden" value="admin" name="type"/>
+							<button style="background-color: #c82333;border-color: #bd2130;" id="btnDeleteImg" type="submit"
 								class="dt-button buttons-html5 btn btn-white btn-primary btn-bold"
 								data-toggle="tooltip" title='Xóa hình ảnh'>
 								<span> <i class="far fa-trash-alt"></i>
 								</span>
 							</button>
+							</form>
+							
 						</div>
 					</div>
 				</div>
@@ -81,8 +91,8 @@
 									 
 									</c:forEach>
 									 </td>
-									<td>${item.price}</td>
-									<td>${item.originalPrice}</td>
+									<td><f:formatNumber value="${item.price} VNĐ" type="currency"/></td>
+									<td><f:formatNumber value="${item.originalPrice} VNĐ" type="currency"/></td>
 									<td>${item.acreage}</td>
 									<td>${item.stock}</td>
 									
@@ -148,9 +158,9 @@
 		var ids = $('tbody input[type=checkbox]:checked').map(function () {
             return $(this).val();
         }).get();
-		console.log(ids);
+		document.querySelector("#ids").value = ids;
 	
-		deleteNew(ids);
+	//	deleteNew(ids);
 	});
 	
 	function deleteNew(data) {
@@ -181,7 +191,7 @@
 		 console.log(numberArr);
 	}
 	$("#btnDeleteImg").click(function() {
-		deleteIMG(numberArr);
+		document.querySelector("#idsIMG").value = numberArr
 	});
 	function deleteIMG(data) {
         $.ajax({

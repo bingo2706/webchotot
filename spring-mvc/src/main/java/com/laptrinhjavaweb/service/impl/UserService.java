@@ -78,4 +78,10 @@ public class UserService implements IUserService{
 		return userConverter.toDto(entity);
 	}
 
+	@Override
+	public void delete(long[] ids) {
+		
+		
+	}
+
 }

@@ -25,7 +25,7 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <form id="formSubmit" >
+                    <form id="formSubmit" action="/api/createUser" method="POST" >
                         <h3 class="register-heading">Đăng ký tài khoản</h3>
                         <div class="row register-form">
                             <div class="col-md-6">
@@ -52,7 +52,8 @@
                                 <div class="form-group">
                                     <input type="date" asp-for="Dob" name="dob" class="form-control" placeholder="Your Dob *"  />
                                 </div>
-                              
+                                <input type="hidden" name="status" value="1">
+                                <input type="hidden" name="type" value="create">
                                 <input type="submit" id="btnAddOrUpdateNew" class="btnRegister" value="Register" />
                             </div>
                         </div>
@@ -69,17 +70,7 @@
 	
    <script>
    $('#btnAddOrUpdateNew').click(function (e) {
-       e.preventDefault();
-       var data = {};
-       var formData = $('#formSubmit').serializeArray();
-       $.each(formData, function (i, v) {
-           data[""+v.name+""] = v.value;
-       });
-    
-     data["status"] = 1;
-        var id = $('#id').val();
-        addNew(data);
-       console.log(data);
+      
    });
 function addNew(data) {
        $.ajax({

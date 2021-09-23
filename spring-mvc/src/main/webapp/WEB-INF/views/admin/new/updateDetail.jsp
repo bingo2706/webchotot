@@ -31,7 +31,7 @@
      	
      
      
-      		<form:form style="margin: 40px; width:40%;" modelAttribute="model" id="formSubmit">
+      		<form:form style="margin: 40px; width:40%;" action="/api/createDetail" method="POST" modelAttribute="model" id="formSubmit">
   <div class="form-group">
     <label for="shortDescription">Tên loại phòng</label>
     <input type="text" class="form-control" id="shortDescription" name="name" value="${model.name }" >
@@ -58,7 +58,7 @@
   </div>
  
    
-   
+   <input type="hidden" value="admin" name="type"/>
  
   		<button type="submit" class="btn btn-primary" id="btnAddOrUpdateNew">Cập nhật bài viết</button>
  
@@ -74,22 +74,7 @@
 	    var productid = (getThamSo("id"));
 	
 	 $('#btnAddOrUpdateNew').click(function (e) {
-	        e.preventDefault();
-	        var data = {};
-	        var formData = $('#formSubmit').serializeArray();
-	        $.each(formData, function (i, v) {
-	            data[""+v.name+""] = v.value;
-	        });
-	      data["base64"] = dataArray.base64;
-	      data["thumbnail"] = dataArray.name;
-	   
-	         var id = $('#id').val();
-	         if (id == "") {
-	            addNew(data);
-	        } else {
-	            updateNew(data);
-	        }    
-	        console.log(data);
+	       
 	    });
 	 function addNew(data) {
 	        $.ajax({

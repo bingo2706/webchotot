@@ -13,7 +13,7 @@
 	<link href="<c:url value='/template/web/css/input.css'/>" rel="stylesheet" type="text/css">
 		<div style="padding-top: 140px;" class="container-contact100">
     <div class="wrap-contact100">
-        <form:form modelAttribute="model" class="contact100-form validate-form" id="formSubmit">
+        <form:form modelAttribute="model" action="/api/createUser" method="POST" class="contact100-form validate-form" id="formSubmit">
             
             <span class="contact100-form-title">
                 Chỉnh sửa tài khoản
@@ -59,6 +59,7 @@
             <div class="container-contact100-form-btn">
                 <div class="wrap-contact100-form-btn">
                     <div class="contact100-form-bgbtn"></div>
+                    <input type=hidden name="type" value="edit">
                     <button type="submit" id="btnAddOrUpdateNew" class="contact100-form-btn">
                         <span>
                             Submit
@@ -87,27 +88,7 @@ $('#uploadImage').change(function () {
 	    console.log(dataArray);
     });
 	 $('#btnAddOrUpdateNew').click(function (e) {
-	        e.preventDefault();
-	        var data = {};
-	        var formData = $('#formSubmit').serializeArray();
-	        $.each(formData, function (i, v) {
-	            data[""+v.name+""] = v.value;
-	        });
-	     
-	      data["status"] = 1;
-	         var id = $('#id').val();
-	       if (id == "") {
-	    	   data["base64"] = dataArray.base64;
-	 	      data["thumbnail"] = dataArray.name;
-	          addNew(data);
-	        } else {
-	        	
-	        	data["thumbnail"] =  document.querySelector("#uploadImage").value;
-	        	
-	        	updateNew(data);
-	           
-	        }  
-	        console.log(data);
+	      
 	    });
 	 function addNew(data) {
 	        $.ajax({
