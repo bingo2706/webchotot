@@ -296,7 +296,7 @@
                	localStorage.setItem("flag", 1);
                	/* window.location.href = "${NewURL}?id="+ ${model.id }; */
                	var html1 = document.querySelector("#cmt-box").innerHTML
-               	var html = `   <div class="Comment_detailComment__2QNx3">
+               	var html = `  <div class="Comment_detailComment__2QNx3">
                     <div class="Comment_avatarWrap__3B6nj">
                     <img class="Comment_avatar__2AN5T imgCmt" alt="T">
                 </div>

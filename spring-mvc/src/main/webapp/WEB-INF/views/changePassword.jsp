@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
+<%@ page import="com.laptrinhjavaweb.util.SecurityUtils" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,25 +26,27 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <form action="j_spring_security_check" method="post">
+                    <form id="formSubmit" action="/api/changepassword" method="post">
                         <h3 class="register-heading">Thay đổi mật khẩu</h3>
                         
                         <div class="row register-form">
-                         <c:if test="${param.incorrectAccount != null}">
-						<div style="margin-bottom: 18px;margin-left: 191px;" class="alert alert-danger">Tài khoản hoặc mật khẩu
-							không đúng</div>
-							</c:if>
-				    		<c:if test="${param.accessDenied != null}">
-										<div style="margin-bottom: 18px;margin-left: 191px;" class="alert alert-danger">
-										Bạn không có quyền truy cập vào trang này
-											</div>
-									</c:if>
+                         
+						<div id="message" style="margin-bottom: 18px;margin-left: 191px; display:none" class="alert alert-danger"></div>
+							
+				    		
                             <div style="margin-left:177px;" class="col-md-6">
-                               
-                                <div class="form-group">
-                                    <input type="text" asp-for="UserName" class="form-control"  name="email" placeholder="Nhập mật khẩu mới*"  />
+                               <div class="form-group">
+                                    <input type="password"  asp-for="UserName" class="form-control"  name="oldpassword" placeholder="Nhập mật khẩu cũ"  />
                                 </div>
-								  <input type="submit" class="btnRegister" value="Gửi email" />
+                                <div class="form-group">
+                                    <input type="password" id="oldpassword" asp-for="UserName" class="form-control"  name="password" placeholder="Nhập mật khẩu mới*"  />
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" id="newpassword" asp-for="UserName" class="form-control"  name="confirmpassword" placeholder="Nhập lại mật khẩu*"  />
+                                </div>
+                                <security:authentication property="principal" var="user"/>
+                                
+								  <input onclick="handleChangePassword()"  type="button" class="btnRegister" value="Submit" />
                             </div>
                           
                         </div>
@@ -59,9 +62,37 @@
 	</div>
 	
 	<script type="text/javascript">
-		setTimeout(function() {
-			$(".alert").fadeOut();
-		}, 1500);
+		
+		const queryString = window.location.search;
+		const urlParams = new URLSearchParams(queryString);
+		const message = urlParams.get('message')
+		
+		if(message){
+			document.getElementById("message").innerHTML = message; 
+			
+			document.getElementById("message").style.display = "block";
+			setTimeout(function() {
+				$(".alert").fadeOut();
+			}, 3000);
+		}
+		function handleChangePassword(){
+			let oldpassword = document.getElementById("oldpassword").value;
+			let newpassword = document.getElementById("newpassword").value;
+			
+			if(oldpassword === newpassword ){
+				document.getElementById("formSubmit").submit();
+				
+			}
+			else{
+				document.getElementById("message").innerHTML = "Nhập lại mật khẩu không đúng"; 
+				
+				document.getElementById("message").style.display = "block";
+				setTimeout(function() {
+					$(".alert").fadeOut();
+				}, 3000);
+				
+			}
+		}
 	</script>
 </body>
 

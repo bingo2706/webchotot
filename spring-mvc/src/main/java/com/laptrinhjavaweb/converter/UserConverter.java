@@ -18,6 +18,7 @@ public class UserConverter {
 		result.setStatus(entity.getStatus());
 		result.setDob(entity.getDob());
 		result.setThumbnail(entity.getThumbnail());
+		result.setUsertoken(entity.getUsertoken());
 		for( int i=0 ; i<entity.getRoles().size();i++){
 			result.setRoleCode(entity.getRoles().get(i).getCode());
 		}
@@ -43,6 +44,7 @@ public class UserConverter {
 		result.setEmail(dto.getEmail());
 		result.setPhonenumber(dto.getPhonenumber());
 		result.setStatus(dto.getStatus());
+		result.setUsertoken(dto.getUsertoken());
 		return result;
 	}
 }

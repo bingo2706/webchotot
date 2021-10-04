@@ -10,6 +10,8 @@ public interface IUserService {
 	List<UserDTO> findAll(Pageable pageable);
 	UserDTO save(UserDTO dto);
 	UserDTO findById(Long id);
+	UserDTO findByEmail(String email);
+	UserDTO findByUserToken(String usertoken);
 	UserDTO findByUserNameAndStatus (String username);
 	int getTotalItem();
 	void delete(long[] ids);

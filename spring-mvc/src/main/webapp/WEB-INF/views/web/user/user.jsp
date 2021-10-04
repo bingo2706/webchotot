@@ -12,6 +12,7 @@
 <body>
   <div style="padding-top: 140px; display:flex;justify-content: center;flex-direction: column;align-items: center;">
   <h3 class="heading">Thông tin tài khoản</h3>
+  	<div id="message" style="margin-bottom: 18px;margin-right: 541px; display:none" class="alert alert-success"></div>
   <table class="table">
   <tr>
     <th>Thuộc tính</th>
@@ -42,8 +43,27 @@
 </table>
  <div class="box-button">
  <a href="<c:url value="/user/edit?id=${model.id }"/>" class="btn btn-green">Chỉnh sửa tài khoản</a>
+ <a href="<c:url value="/user/changepassword"/>" style="margin-left:10px;" class="btn btn-red">Đổi mật khẩu</a>
  	<a href="<c:url value="/user/product?id=${model.id }"/>" style="margin-left:10px;" class="btn btn-blue">Danh sách sản phẩm</a>
+ 	
  </div>
   </div>
+  <script type="text/javascript">
+		
+		const queryString = window.location.search;
+		const urlParams = new URLSearchParams(queryString);
+		const message = urlParams.get('message')
+		if(message){
+			document.getElementById("message").innerHTML = message; 
+			
+			document.getElementById("message").style.display = "block";
+			setTimeout(function() {
+				$(".alert").fadeOut();
+			}, 2000);
+		}
+		
+		
+	</script>
 </body>
+
 </html>

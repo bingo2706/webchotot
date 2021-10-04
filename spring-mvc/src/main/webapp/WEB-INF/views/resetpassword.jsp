@@ -25,8 +25,8 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <form action="/forgotpassword" method="post">
-                        <h3 class="register-heading">Quên mật khẩu</h3>
+                    <form id="formSubmit" action="/resetpassword" method="post">
+                        <h3 class="register-heading">Đổi mật khẩu mới</h3>
                         
                         <div class="row register-form">
                          
@@ -36,9 +36,13 @@
                             <div style="margin-left:177px;" class="col-md-6">
                                
                                 <div class="form-group">
-                                    <input type="text" asp-for="UserName" class="form-control"  name="email" placeholder="Nhập email của bạn *"  />
+                                    <input type="password" asp-for="UserName" id="password" class="form-control"  name="password" placeholder="Nhập mật khẩu mới của bạn *"  />
                                 </div>
-								  <input type="submit" class="btnRegister" value="Gửi email" />
+                                <div class="form-group">
+                                    <input type="password" asp-for="UserName" id="confirmpassword" class="form-control"  name="password" placeholder="Nhập lại mật khẩu của bạn *"  />
+                                </div>
+                                <input type="hidden" id="usertoken" name="usertoken" value="" />
+								  <input onclick="handleChangePassword()" type="button" class="btnRegister" value="Submit" />
                             </div>
                           
                         </div>
@@ -57,6 +61,10 @@
 	const queryString = window.location.search;
 	const urlParams = new URLSearchParams(queryString);
 	const message = urlParams.get('message')
+	const id = urlParams.get('id');
+		if(id){
+			document.getElementById("usertoken").value = id;
+		}
 	if(message){
 		document.getElementById("message").innerHTML = message; 
 		
@@ -64,6 +72,24 @@
 		setTimeout(function() {
 			$(".alert").fadeOut();
 		}, 3000);
+	}
+	function handleChangePassword(){
+		let oldpassword = document.getElementById("password").value;
+		let newpassword = document.getElementById("confirmpassword").value;
+		
+		if(oldpassword === newpassword ){
+			document.getElementById("formSubmit").submit();
+			
+		}
+		else{
+			document.getElementById("message").innerHTML = "Nhập lại mật khẩu không đúng"; 
+			
+			document.getElementById("message").style.display = "block";
+			setTimeout(function() {
+				$(".alert").fadeOut();
+			}, 3000);
+			
+		}
 	}
 	</script>
 </body>

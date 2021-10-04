@@ -12,6 +12,13 @@ public class UserDTO extends AbstractDTO<UserDTO>{
 	private String username;
 	private String thumbnail;
 	private String roleCode;
+	private String usertoken;
+	public String getUsertoken() {
+		return usertoken;
+	}
+	public void setUsertoken(String usertoken) {
+		this.usertoken = usertoken;
+	}
 	public String getEmail() {
 		return email;
 	}

@@ -1,6 +1,7 @@
 package com.laptrinhjavaweb.controller.web;
 
 import java.util.Base64;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -84,7 +86,7 @@ public class HomeController {
 		mav.addObject("categories",categoryModel);
 		mav.addObject("slides",slideModel);
 		
-//		sendEmail("dotanthanhvlog@gmail.com", "bongrovn123@gmail.com", "Hello", "Xin chao");
+		
 		
 		
 		return mav;
@@ -212,10 +214,85 @@ public class HomeController {
 		ModelAndView mav = new ModelAndView("forgotPassword");	
 		return mav;
 	}
-	@RequestMapping(value = "/changepassword", method = RequestMethod.POST)
-	public ModelAndView changepassword(HttpServletRequest request) {
-
-		return new ModelAndView("redirect:/trang-chu?page=1&limit=10");
+	public String randomString(){
+		String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	    StringBuilder sb = new StringBuilder();
+	    Random random = new Random();
+	    int length = 15;
+	    for(int i = 0; i < length; i++) {	     
+	      int index = random.nextInt(alphabet.length());
+	      char randomChar = alphabet.charAt(index);
+	      sb.append(randomChar);
+	    }
+	    String randomString = sb.toString();
+	    return randomString;
 	}
+	@RequestMapping(value = "/forgotpassword", method = RequestMethod.POST)
+	public ModelAndView forgotPassword(HttpServletRequest request) {
+		
+		String email = request.getParameter("email");
+		UserDTO user = userService.findByEmail(email);
+		if(user == null){
+			ModelAndView mav1 = new ModelAndView("redirect:/forgotpassword");
+			mav1.addObject("message","Email không tồn tại");
+			return mav1;
+		}
+		String usertoken = randomString();
+		user.setUsertoken(usertoken);
+		userService.save(user);
+		String url = "http://localhost:8080/resetpassword?id="+usertoken;
+		String content = "Xin hãy nhấn vào link này \n "+url;
+		sendEmail("dotanthanhvlog@gmail.com", email, "PTITSTAY Quên mật khẩu", content);
+		
+		return new ModelAndView("redirect:/dang-nhap");
+	}
+	@RequestMapping(value = "/user/changepassword", method = RequestMethod.GET)
+	public ModelAndView changepasswordview(HttpServletRequest request) {
+
+		ModelAndView mav = new ModelAndView("changePassword");	
+		return mav;
+	}
+	@RequestMapping(value = "/api/changepassword", method = RequestMethod.POST)
+	public ModelAndView changepassword(HttpServletRequest request) {
+		
+		String oldPassword = request.getParameter("oldpassword");
 	
+		String newpassword = request.getParameter("password");
+		Long userid =  Long.parseLong(request.getParameter("id"));
+		UserDTO user = userService.findById(userid);
+		if(!BCrypt.checkpw(oldPassword, user.getPassword())){
+			ModelAndView mav1 = new ModelAndView("redirect:/user/changepassword");
+			mav1.addObject("message","Mật khẩu cũ không đúng");
+			 return mav1;
+		}
+		user.setPassword(newpassword);
+		userService.save(user);
+		String url = "redirect:/user/info?id=" + request.getParameter("id");
+		ModelAndView mav = new ModelAndView(url);
+		mav.addObject("message","Đổi mật khẩu thành công");
+		return mav;
+	}
+	@RequestMapping(value = "/resetpassword", method = RequestMethod.GET)
+	public ModelAndView resetpasswordview(HttpServletRequest request) {
+
+		ModelAndView mav = new ModelAndView("resetpassword");	
+		return mav;
+	}
+	@RequestMapping(value = "/resetpassword", method = RequestMethod.POST)
+	public ModelAndView resetpassword(HttpServletRequest request) {
+		String password = request.getParameter("password");	
+		String usertoken = request.getParameter("usertoken");
+		UserDTO user = userService.findByUserToken(usertoken);
+		if(user ==null){
+			ModelAndView mav1 = new ModelAndView("redirect:/forgotpassword");
+			mav1.addObject("message","Token không đúng");
+			 return mav1;
+		}
+		user.setPassword(password);
+		user.setUsertoken("");
+		userService.save(user);
+		ModelAndView mav = new ModelAndView("redirect:/dang-nhap");
+		mav.addObject("message","Lấy lại mật khẩu thành công");
+		return mav;
+	}
 }

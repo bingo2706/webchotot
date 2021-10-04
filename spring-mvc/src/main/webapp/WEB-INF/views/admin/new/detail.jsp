@@ -91,8 +91,8 @@
 									 
 									</c:forEach>
 									 </td>
-									<td><f:formatNumber value="${item.price} VNĐ" type="currency"/></td>
-									<td><f:formatNumber value="${item.originalPrice} VNĐ" type="currency"/></td>
+									<td><f:formatNumber value="${item.price}" type="currency"/> VNĐ</td>
+									<td><f:formatNumber value="${item.originalPrice}" type="currency"/>  VNĐ</td>
 									<td>${item.acreage}</td>
 									<td>${item.stock}</td>
 									

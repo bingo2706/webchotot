@@ -55,6 +55,9 @@ public class UserService implements IUserService{
 		if(dto.getId() != null){
 			
 			UserEntity oldUser = userRepository.findOne(dto.getId());
+			if(dto.getPassword()!=null){
+				oldUser.setPassword(BCrypt.hashpw(dto.getPassword(), BCrypt.gensalt(10)));
+			}
 			oldUser.setRoles(listRole);
 			entity = userConverter.toEnity(oldUser, dto);
 		}else{
@@ -82,6 +85,26 @@ public class UserService implements IUserService{
 	public void delete(long[] ids) {
 		
 		
+	}
+
+	@Override
+	public UserDTO findByEmail(String email) {
+		UserEntity entity = userRepository.findOneByEmail(email);
+		if(entity ==null){
+			UserDTO dto = null;
+			return dto;
+		}
+		return userConverter.toDto(entity);
+	}
+
+	@Override
+	public UserDTO findByUserToken(String usertoken) {
+		UserEntity entity = userRepository.findOneByUsertoken(usertoken);
+		if(entity ==null){
+			UserDTO dto = null;
+			return dto;
+		}
+		return userConverter.toDto(entity);
 	}
 
 }

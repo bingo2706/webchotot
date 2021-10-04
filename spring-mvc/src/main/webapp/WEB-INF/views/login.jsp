@@ -38,6 +38,7 @@
 										Bạn không có quyền truy cập vào trang này
 											</div>
 									</c:if>
+									<div id="message" style="margin-bottom: 18px;margin-left: 191px; display:none" class="alert alert-success"></div>
                             <div style="margin-left:177px;" class="col-md-6">
                                
                                 <div class="form-group">
@@ -46,7 +47,7 @@
                                 <div class="form-group">
                                     <input type="password" asp-for="Password" name="j_password" class="form-control" placeholder="Password *"  />
                                 </div>
-                                <a href="#">Quên mật khẩu</a>
+                                <a href="<c:url value="/forgotpassword"/>">Quên mật khẩu</a>
 								  <input type="submit" class="btnRegister" value="Đăng nhập" />
                             </div>
                           
@@ -63,9 +64,18 @@
 	</div>
 	
 	<script type="text/javascript">
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	const message = urlParams.get('message')
+	
+	if(message){
+		document.getElementById("message").innerHTML = message; 
+		
+		document.getElementById("message").style.display = "block";
 		setTimeout(function() {
 			$(".alert").fadeOut();
-		}, 1500);
+		}, 3000);
+	}
 	</script>
 </body>
 
