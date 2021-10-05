@@ -1,6 +1,7 @@
 package com.laptrinhjavaweb.controller.web;
 
 import java.util.Base64;
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.core.Authentication;
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.laptrinhjavaweb.dto.CategoryDTO;
+import com.laptrinhjavaweb.dto.OrderRoomDTO;
 import com.laptrinhjavaweb.dto.ProductDTO;
 import com.laptrinhjavaweb.dto.ProductDetailDTO;
 import com.laptrinhjavaweb.dto.SlideDTO;
@@ -30,6 +33,7 @@ import com.laptrinhjavaweb.dto.UserDTO;
 import com.laptrinhjavaweb.repository.SlideRepository;
 import com.laptrinhjavaweb.service.ICategoryService;
 import com.laptrinhjavaweb.service.INewService;
+import com.laptrinhjavaweb.service.IOrderRoomService;
 import com.laptrinhjavaweb.service.IRoleService;
 import com.laptrinhjavaweb.service.ISlideService;
 import com.laptrinhjavaweb.service.IUserService;
@@ -52,6 +56,9 @@ public class HomeController {
 	
 	@Autowired 
 	private IRoleService roleService;
+	
+	@Autowired
+	private IOrderRoomService orderService;
 	
 	@Autowired
 	MailSender mailSender;
@@ -343,4 +350,24 @@ public class HomeController {
 		
 		return mav1;
 	}
+	@RequestMapping(value = "/order", method = RequestMethod.POST)
+	public ModelAndView orderRoom(HttpServletRequest request) {
+		OrderRoomDTO orderDto = FormUtil.toModel(OrderRoomDTO.class, request);
+		String url = "redirect:/product/detail?id=" + orderDto.getProductId();
+		orderDto = orderService.save(orderDto);
+		
+		ModelAndView mav = new ModelAndView(url);
+		mav.addObject("message","Đặt phòng thành công");
+		return mav;
+	}
+	@RequestMapping(value = "/user/list-order", method = RequestMethod.GET)
+	public ModelAndView listOrder(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("web/user/listorder");
+		Long id = Long.parseLong(request.getParameter("id")) ;
+		
+		List<OrderRoomDTO> models = orderService.findListOrderByUserId(id);
+		mav.addObject("model",models);
+		return mav;
+	}
+	
 }

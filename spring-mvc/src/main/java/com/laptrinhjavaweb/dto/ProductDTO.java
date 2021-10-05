@@ -19,7 +19,13 @@ public class ProductDTO extends AbstractDTO<ProductDTO> {
 	private Long status;
 	private String name;
 	private List<ProductDetailDTO> listDetail;
-	
+	private List<OrderRoomDTO> listOrder;
+	public List<OrderRoomDTO> getListOrder() {
+		return listOrder;
+	}
+	public void setListOrder(List<OrderRoomDTO> listOrder) {
+		this.listOrder = listOrder;
+	}
 	public String getContent() {
 		return content;
 	}

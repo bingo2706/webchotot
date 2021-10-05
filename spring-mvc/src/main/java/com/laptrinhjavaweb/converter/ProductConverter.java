@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.laptrinhjavaweb.dto.OrderRoomDTO;
 import com.laptrinhjavaweb.dto.ProductDTO;
 import com.laptrinhjavaweb.dto.ProductDetailDTO;
+import com.laptrinhjavaweb.entity.OrderRoomEntity;
 import com.laptrinhjavaweb.entity.ProductDetailEntity;
 import com.laptrinhjavaweb.entity.ProductEntity;
 
@@ -16,6 +18,9 @@ public class ProductConverter {
 	
 	@Autowired
 	private ProductDetailConverter productDetailConverter;
+	
+	@Autowired
+	private OrderRoomConverter orderRoomConverter;
 	
 	public ProductDTO toDto(ProductEntity entity){
 		ProductDTO result = new ProductDTO();
@@ -30,6 +35,12 @@ public class ProductConverter {
 	    	ProductDetailDTO dto = productDetailConverter.toDto(item);
 	    	listDetail.add(dto);
 	    }
+	    List<OrderRoomDTO> listOrder = new ArrayList<>();
+	    for(OrderRoomEntity item: entity.getOrderRoom()){
+	    	OrderRoomDTO orderDto = orderRoomConverter.toDto(item);
+	    	listOrder.add(orderDto);
+	    }
+	    result.setListOrder(listOrder);
 	    result.setListDetail(listDetail);
 		result.setShortDescription(entity.getShortDescription());
 		result.setId(entity.getId());

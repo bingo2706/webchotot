@@ -198,31 +198,32 @@ input.input100 {
 			      <h2>Để lại thông tin của quý khách</h2>
 			    </div>
 			    <div class="modal-body">
-			     <form class="contact100-form validate-form">
+			     <form action="/order" method="post" class="contact100-form validate-form">
 					<div class="wrap-input100 validate-input">
 						<span class="label-input100">Họ và tên</span> <input
-							class="input100" asp-for="Name" id="title" name="title" placeholder="Nhập họ và tên của bạn"
+							class="input100" asp-for="Name" id="title" name="fullname" placeholder="Nhập họ và tên của bạn"
 							/> <span class="focus-input100"></span>
 						<span asp-validation-for="Name" class="text-danger"></span>
 					</div>
 					<div class="wrap-input100 validate-input">
 						<span class="label-input100">Email</span> <input
-							class="input100" asp-for="Name" id="title" name="title" placeholder="Nhập email của bạn"
+							class="input100" asp-for="Name" id="title" name="email" placeholder="Nhập email của bạn"
 							/> <span class="focus-input100"></span>
 						<span asp-validation-for="Name" class="text-danger"></span>
 					</div>
 					<div class="wrap-input100 validate-input">
 						<span class="label-input100">Số điện thoại</span> <input
-							class="input100" asp-for="Name" id="title" name="title" placeholder="Nhập số điện thoại của bạn"
+							class="input100" asp-for="Name" id="title" name="phonenumber" placeholder="Nhập số điện thoại của bạn"
 							/> <span class="focus-input100"></span>
 						<span asp-validation-for="Name" class="text-danger"></span>
 					</div>
 					<div class="wrap-input100 validate-input">
 						<span class="label-input100">Địa chỉ</span> <input
-							class="input100" asp-for="Name" id="title" name="title" placeholder="Nhập địa chỉ của bạn"
+							class="input100" asp-for="Name" id="title" name="address" placeholder="Nhập địa chỉ của bạn"
 							/> <span class="focus-input100"></span>
 						<span asp-validation-for="Name" class="text-danger"></span>
 					</div>
+					<input type="hidden" name="productId" value=${model.id } />
 					<button style="margin-bottom:10px" class="btn btn-red">Gửi thông tin</button>
 				</form>
 			    </div>

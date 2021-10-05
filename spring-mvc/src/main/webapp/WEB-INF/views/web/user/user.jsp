@@ -40,14 +40,14 @@
 			</tr>
 			<tr>
 				<td>Email</td>
-				<td>${model.email}
-					<c:if
+				<td>${model.email}<c:if
 						test="${model.isActiveEmail == 1 && model.email != null}">
 						<i class="fas fa-check icon-check"></i>
-					</c:if>
-					 <c:if test="${model.isActiveEmail == 0 && model.email != null}">
+					</c:if> <c:if test="${model.isActiveEmail == 0 && model.email != null}">
 						<i class="fas fa-times icon-close"></i>
-						<a href="<c:url value="/user/active-email?email=${model.email }"/>">Kích hoạt</a>
+						<a
+							href="<c:url value="/user/active-email?email=${model.email }"/>">Kích
+							hoạt</a>
 					</c:if>
 				</td>
 			</tr>
@@ -60,8 +60,8 @@
 				style="margin-left: 10px;" class="btn btn-red">Đổi mật khẩu</a> <a
 				href="<c:url value="/user/product?id=${model.id }"/>"
 				style="margin-left: 10px;" class="btn btn-blue">Danh sách sản
-				phẩm</a>
-
+				phẩm</a> <a href="<c:url value="/user/list-order?id=${model.id }"/>"
+				style="margin-left: 10px;" class="btn btn-orange">Danh sách đặt phòng</a>
 		</div>
 	</div>
 	<script type="text/javascript">

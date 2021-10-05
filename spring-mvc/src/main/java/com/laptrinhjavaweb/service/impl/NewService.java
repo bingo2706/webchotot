@@ -107,14 +107,8 @@ public class NewService implements INewService{
 		detailEnity.setOriginalPrice(dto.getOriginalPrice());
 		detailEnity.setPrice(dto.getPrice());
 		detailEnity.setStock(dto.getStock());
-		detailEnity.setName(dto.getName());
-		
-		
+		detailEnity.setName(dto.getName());	
 		productImgEntity.setThumbnail(dto.getThumbnail());
-		
-		
-		
-		
 		ProductEntity newEntity = new ProductEntity();
 		if(dto.getId() != null){
 			ProductEntity oldNew = newRepository.findOne(dto.getId());
@@ -281,14 +275,15 @@ public class NewService implements INewService{
 
 	@Override
 	public List<ProductDTO> findListProductByUserID(Long id) {
-		UserEntity userEntity = userRepository.findOne(id);
-		List<ProductDTO> listProduct = new ArrayList<>();
-		List<ProductEntity> entity = newRepository.findOneByCreatedBy(userEntity.getUserName());
-		for(ProductEntity item : entity){
-			ProductDTO dto = newConverter.toDto(item);
-			listProduct.add(dto);
-		}
-		return listProduct;
+		
+			UserEntity userEntity = userRepository.findOne(id);
+			List<ProductDTO> listProduct = new ArrayList<>();
+			List<ProductEntity> entity = newRepository.findOneByCreatedBy(userEntity.getUserName());
+			for(ProductEntity item : entity){
+				ProductDTO dto = newConverter.toDto(item);
+				listProduct.add(dto);	
+			}
+			return listProduct;
 	}
 
 	
