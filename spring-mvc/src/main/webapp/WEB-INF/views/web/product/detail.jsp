@@ -12,6 +12,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+<link href="<c:url value='/template/web/css/input.css'/>" rel="stylesheet" type="text/css">
+
+<style>
+input.input100 {
+    height: 20px;
+}
+</style>
 		 <security:authorize access="isAuthenticated()">
 		<input type = hidden id = "nameImg" value = "<%=SecurityUtils.getPrincipal().getThumbnail() %>">
 		</security:authorize>
@@ -116,6 +123,7 @@
             </c:forEach>
       
         </select>
+        <button style="margin:19px 16px" id="myBtn" class="btn btn-blue">Đặt phòng</button>
         </div>
         
         
@@ -162,7 +170,7 @@
                         </span>·
                         <span class="Comment_replyComment__iW7KQ">
                             Trả lời</span>
-                            <c:if test="${item.userId ==  user.id}">
+                           <c:if test="${item.userId ==  user.id}">
                             <span onclick="deleteFunc(${item.id})" class="Comment_replyComment__iW7KQ">
                             Xóa</span> 
                             </c:if>
@@ -176,8 +184,53 @@
     <input type="hidden" id="idCMT" name="id">
     <input type="hidden" id="productIdOfCMT" value=${model.id } name="productId">
     </form>
-       
-      
+       <!-- Button trigger modal -->
+	
+		
+
+<!-- The Modal -->
+		<div id="myModal" class="modal">
+		
+			  <!-- Modal content -->
+			  <div class="modal-content">
+			    <div class="modal-header">
+			      <span class="close">&times;</span>
+			      <h2>Để lại thông tin của quý khách</h2>
+			    </div>
+			    <div class="modal-body">
+			     <form class="contact100-form validate-form">
+					<div class="wrap-input100 validate-input">
+						<span class="label-input100">Họ và tên</span> <input
+							class="input100" asp-for="Name" id="title" name="title" placeholder="Nhập họ và tên của bạn"
+							/> <span class="focus-input100"></span>
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+					<div class="wrap-input100 validate-input">
+						<span class="label-input100">Email</span> <input
+							class="input100" asp-for="Name" id="title" name="title" placeholder="Nhập email của bạn"
+							/> <span class="focus-input100"></span>
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+					<div class="wrap-input100 validate-input">
+						<span class="label-input100">Số điện thoại</span> <input
+							class="input100" asp-for="Name" id="title" name="title" placeholder="Nhập số điện thoại của bạn"
+							/> <span class="focus-input100"></span>
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+					<div class="wrap-input100 validate-input">
+						<span class="label-input100">Địa chỉ</span> <input
+							class="input100" asp-for="Name" id="title" name="title" placeholder="Nhập địa chỉ của bạn"
+							/> <span class="focus-input100"></span>
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+					<button style="margin-bottom:10px" class="btn btn-red">Gửi thông tin</button>
+				</form>
+			    </div>
+			  
+		  </div>
+		
+		</div>
+	
       
        <script>
       var nameImg = document.querySelector("#nameImg").value;
@@ -284,96 +337,14 @@
             });     
             addNew(data);
        }
-       function addNew(data) {
-    	   document.querySelector(".input-cmt").innerText = "";
-           $.ajax({
-               url: '${APIurl}',
-               type: 'POST',
-               contentType: 'application/json',
-               data: JSON.stringify(data),
-               dataType: 'json',
-               success: function (result) {
-               	localStorage.setItem("flag", 1);
-               	/* window.location.href = "${NewURL}?id="+ ${model.id }; */
-               	var html1 = document.querySelector("#cmt-box").innerHTML
-               	var html = `  <div class="Comment_detailComment__2QNx3">
-                    <div class="Comment_avatarWrap__3B6nj">
-                    <img class="Comment_avatar__2AN5T imgCmt" alt="T">
-                </div>
-                <div class="Comment_commentBody__1ntR8">
-                    <div class="Comment_commentContent__sui6z">
-                        <h5 class="Comment_commentAuthor__1DMry">\${result.nameUser }</h5>
-                        <div class="Comment_commentText__3TvGl">
-                            <span>\${result.content}</span>
-                        </div>
-                      
-                </div>
-                <div class="Comment_commentTime__25oQ6 noselect">
-                    <p class="Comment_createdAt__3HtoE">
-                        <span class="Comment_iconWrapper__2ubwt">
-                            <span class="Comment_likeComment__GY1kj" aria-expanded="false">
-                                Thích</span>
-                            </span>·
-                            <span class="Comment_replyComment__iW7KQ">
-                                Trả lời</span> · Vài giây trước</p>
-                            </div>
-                        </div>
-                    </div> `
-                   
-                  document.querySelector("#cmt-box").innerHTML = html1 + html;
-                  var srcImg = document.querySelector(".imgAvatar").src;
-                  console.log(srcImg)
-                   var imgArray =  document.querySelectorAll(".imgCmt") ;
-                  
-                  for(var i= 0 ; i< imgArray.length;i++){
-                      imgArray[i].src = srcImg;
-                	  console.log(imgArray[i].src)
-                  }
-             		console.log(result)
-               },
-               error: function (error) {
-               	window.location.href = "";
-               }
-           });
-       }
-       function updateNew(data) {
-           $.ajax({
-               url: '${APIurl}',
-               type: 'PUT',
-               contentType: 'application/json',
-               data: JSON.stringify(data),
-               dataType: 'json',
-               success: function (result) {
-               	localStorage.setItem("flag", 1);
-               	localStorage.setItem("id", data.id);
-               	window.location.href = "http://localhost:8080/new-jdbc-12-month-2018/detail?action=detail&id=";
-               },
-               error: function (error) {
-               	window.location.href = "http://localhost:8080/new-jdbc-12-month-2018/trang-chu?&page=1&maxPageItem=6&sortName=title&sortBy=asc";
-               }
-           });
-       }
+ 
+       
    	function deleteFunc(id){
    		document.getElementById("idCMT").value = id;
    		document.getElementById("deleteCmtForm").submit();
 	//	deleteNew(id);
 	}
-	function deleteNew(id) {
-        $.ajax({
-            url: '${APIurl}',
-            type: 'DELETE',
-            contentType: 'application/json',
-            data: JSON.stringify(id),
-            success: function (result) {
-            	var item = ".cmt_" + id;
-            	document.querySelector(item).outerHTML = "<div></div>"
-               console.log("Success")
-            },
-            error: function (error) {
-            	console.log("Failed")
-            }
-        });
-    }
+	
        function DisplayEdit(id) {
        	document.querySelector(".boxedit_"+id).style.display = "block";
           
@@ -384,6 +355,26 @@
            document.querySelector(".edit_"+id).style.display = "block";
            document.querySelector(".content_input_"+id).innerText = document.querySelector(".content_"+id).textContent;
        }
+       var modal = document.getElementById("myModal");
+       var btn = document.getElementById("myBtn");
+      var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal 
+	    btn.onclick = function() {
+	      modal.style.display = "block";
+	    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
      </script>
 </body>
 </html>

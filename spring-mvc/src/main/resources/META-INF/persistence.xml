@@ -9,5 +9,6 @@
           <class>com.laptrinhjavaweb.entity.SlideEntity</class>
           <class>com.laptrinhjavaweb.entity.ProductImageEntity</class>
           <class>com.laptrinhjavaweb.entity.ProductDetailEntity</class>
+          <class>com.laptrinhjavaweb.entity.OrderRoomEntity</class>  
     </persistence-unit>
 </persistence>

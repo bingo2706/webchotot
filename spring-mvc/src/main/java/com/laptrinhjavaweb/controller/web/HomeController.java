@@ -243,8 +243,9 @@ public class HomeController {
 		String url = "http://localhost:8080/resetpassword?id="+usertoken;
 		String content = "Xin hãy nhấn vào link này \n "+url;
 		sendEmail("dotanthanhvlog@gmail.com", email, "PTITSTAY Quên mật khẩu", content);
-		
-		return new ModelAndView("redirect:/dang-nhap");
+		ModelAndView mav = new ModelAndView("redirect:/dang-nhap");
+		mav.addObject("message","Xin vui lòng kiểm tra email");
+		return mav;
 	}
 	@RequestMapping(value = "/user/changepassword", method = RequestMethod.GET)
 	public ModelAndView changepasswordview(HttpServletRequest request) {

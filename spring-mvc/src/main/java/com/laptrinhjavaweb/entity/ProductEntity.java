@@ -21,7 +21,6 @@ public class ProductEntity extends BaseEntity {
 	@Column(name = "shortdescription", columnDefinition = "TEXT")
 	private String shortDescription;
 	
-	
 	@Column(name = "status")
 	private Long status;
 	
@@ -86,6 +85,17 @@ public class ProductEntity extends BaseEntity {
 	@OneToMany(mappedBy = "product")
 	private List<ProductDetailEntity> productdetail = new ArrayList<>();
 	
+	@OneToMany(mappedBy = "product")
+	private List<OrderRoomEntity> orderRoom = new ArrayList<>();
+	
+	public List<OrderRoomEntity> getOrderRoom() {
+		return orderRoom;
+	}
+
+	public void setOrderRoom(List<OrderRoomEntity> orderRoom) {
+		this.orderRoom = orderRoom;
+	}
+
 	public CategoryEntity getCategory() {
 		return category;
 	}

@@ -39,6 +39,17 @@ public class UserEntity extends BaseEntity {
 	@Column(name = "thumbnail")
 	private String thumbnail;
 	
+	@Column(name = "isActiveEmail")
+	private String isActiveEmail;
+	
+	public String getIsActiveEmail() {
+		return isActiveEmail;
+	}
+
+	public void setIsActiveEmail(String isActiveEmail) {
+		this.isActiveEmail = isActiveEmail;
+	}
+
 	public String getUsertoken() {
 		return usertoken;
 	}
@@ -96,7 +107,7 @@ public class UserEntity extends BaseEntity {
 	@OneToMany(mappedBy = "users")
 	private List<CommentEntity> comments = new ArrayList<>();
 	
-	
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "userid"), 
 								  inverseJoinColumns = @JoinColumn(name = "roleid"))

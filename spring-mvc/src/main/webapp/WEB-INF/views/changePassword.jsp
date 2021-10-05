@@ -10,7 +10,7 @@
 </head>
 <body>
 
-	 
+
 	
 		<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 	<div style="padding-top: 140px;">
@@ -45,7 +45,7 @@
                                     <input type="password" id="newpassword" asp-for="UserName" class="form-control"  name="confirmpassword" placeholder="Nhập lại mật khẩu*"  />
                                 </div>
                                 <security:authentication property="principal" var="user"/>
-                                
+                                <input type="hidden" name="id" value=${user.id } />
 								  <input onclick="handleChangePassword()"  type="button" class="btnRegister" value="Submit" />
                             </div>
                           
