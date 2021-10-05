@@ -55,14 +55,21 @@ public class UserService implements IUserService{
 		if(dto.getId() != null){
 			
 			UserEntity oldUser = userRepository.findOne(dto.getId());
-			if(dto.getPassword()!=null){
-				oldUser.setPassword(BCrypt.hashpw(dto.getPassword(), BCrypt.gensalt(10)));
+			if(dto.getType()!=null){
+				if(dto.getType().equals("password")){
+					oldUser.setPassword(BCrypt.hashpw(dto.getPassword(), BCrypt.gensalt(10)));
+				}
+				if(dto.getType().equals("activeEmail"))
+				{
+					oldUser.setIsActiveEmail(dto.getIsActiveEmail());
+				}
+				
 			}
 			oldUser.setRoles(listRole);
 			entity = userConverter.toEnity(oldUser, dto);
 		}else{
 			dto.setPassword(BCrypt.hashpw(dto.getPassword(), BCrypt.gensalt(10)));
-		
+			dto.setIsActiveEmail("0");
 			entity = userConverter.toEnity(dto);
 			entity.setRoles(listRole);
 		}

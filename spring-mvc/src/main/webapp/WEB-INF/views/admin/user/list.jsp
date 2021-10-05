@@ -70,7 +70,15 @@
 									<td>${item.fullname}</td>
 									<td>${item.dob }</td>
 									<td> <img alt="photo" style="width:50px; height:50px;" src="<c:url value='/template/admin/thumbnail/${item.thumbnail }'/>">  </td>
-									<td>${item.email}</td>
+									<td>${item.email}
+									<c:if test="${item.isActiveEmail == 1 && item.email != null}">
+										<i class="fas fa-check icon-check"></i>
+									</c:if>
+									<c:if test="${item.isActiveEmail == 0 && item.email != null}">
+									<i class="fas fa-times icon-close"></i>
+									</c:if>
+									
+									</td>
 									<td>${item.phonenumber}</td>
 									<td><c:url var="editURL" value="/admin-user/create">
 

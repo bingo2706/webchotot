@@ -42,6 +42,7 @@
                                     <input type="password" asp-for="UserName" id="confirmpassword" class="form-control"  name="password" placeholder="Nhập lại mật khẩu của bạn *"  />
                                 </div>
                                 <input type="hidden" id="usertoken" name="usertoken" value="" />
+                                 <input type="hidden" name="type" value="password" />
 								  <input onclick="handleChangePassword()" type="button" class="btnRegister" value="Submit" />
                             </div>
                           

@@ -10916,3 +10916,9 @@ body.sidebar-toggled footer.sticky-footer {
 .border-black{
   border: 2px solid #2196f3 !important;
   }
+  .icon-check{
+  	color:green;
+  }
+  .icon-close{
+  	color:red;
+  }

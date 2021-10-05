@@ -13,6 +13,14 @@ public class UserDTO extends AbstractDTO<UserDTO>{
 	private String thumbnail;
 	private String roleCode;
 	private String usertoken;
+	private String isActiveEmail;
+	
+	public String getIsActiveEmail() {
+		return isActiveEmail;
+	}
+	public void setIsActiveEmail(String isActiveEmail) {
+		this.isActiveEmail = isActiveEmail;
+	}
 	public String getUsertoken() {
 		return usertoken;
 	}

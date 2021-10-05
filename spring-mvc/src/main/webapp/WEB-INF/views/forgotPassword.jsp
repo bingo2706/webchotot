@@ -38,6 +38,7 @@
                                 <div class="form-group">
                                     <input type="text" asp-for="UserName" class="form-control"  name="email" placeholder="Nhập email của bạn *"  />
                                 </div>
+                                 <input type="hidden" name="type" value="password" />
 								  <input type="submit" class="btnRegister" value="Gửi email" />
                             </div>
                           

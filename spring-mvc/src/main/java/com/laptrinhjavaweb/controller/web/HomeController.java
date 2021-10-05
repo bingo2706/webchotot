@@ -232,9 +232,16 @@ public class HomeController {
 		
 		String email = request.getParameter("email");
 		UserDTO user = userService.findByEmail(email);
+		ModelAndView mav1 = new ModelAndView("redirect:/forgotpassword");
+		ModelAndView mav = new ModelAndView("redirect:/dang-nhap");
 		if(user == null){
-			ModelAndView mav1 = new ModelAndView("redirect:/forgotpassword");
+			
 			mav1.addObject("message","Email không tồn tại");
+			return mav1;
+		}
+		if(user.getIsActiveEmail().equals("0")){
+			
+			mav1.addObject("message","Email chưa được kích hoạt");
 			return mav1;
 		}
 		String usertoken = randomString();
@@ -243,7 +250,7 @@ public class HomeController {
 		String url = "http://localhost:8080/resetpassword?id="+usertoken;
 		String content = "Xin hãy nhấn vào link này \n "+url;
 		sendEmail("dotanthanhvlog@gmail.com", email, "PTITSTAY Quên mật khẩu", content);
-		ModelAndView mav = new ModelAndView("redirect:/dang-nhap");
+		
 		mav.addObject("message","Xin vui lòng kiểm tra email");
 		return mav;
 	}
@@ -260,6 +267,7 @@ public class HomeController {
 	
 		String newpassword = request.getParameter("password");
 		Long userid =  Long.parseLong(request.getParameter("id"));
+		String type = request.getParameter("type");
 		UserDTO user = userService.findById(userid);
 		if(!BCrypt.checkpw(oldPassword, user.getPassword())){
 			ModelAndView mav1 = new ModelAndView("redirect:/user/changepassword");
@@ -267,6 +275,7 @@ public class HomeController {
 			 return mav1;
 		}
 		user.setPassword(newpassword);
+		user.setType(type);
 		userService.save(user);
 		String url = "redirect:/user/info?id=" + request.getParameter("id");
 		ModelAndView mav = new ModelAndView(url);
@@ -283,6 +292,7 @@ public class HomeController {
 	public ModelAndView resetpassword(HttpServletRequest request) {
 		String password = request.getParameter("password");	
 		String usertoken = request.getParameter("usertoken");
+		String type = request.getParameter("type");
 		UserDTO user = userService.findByUserToken(usertoken);
 		if(user ==null){
 			ModelAndView mav1 = new ModelAndView("redirect:/forgotpassword");
@@ -291,9 +301,46 @@ public class HomeController {
 		}
 		user.setPassword(password);
 		user.setUsertoken("");
+		user.setType(type);
 		userService.save(user);
 		ModelAndView mav = new ModelAndView("redirect:/dang-nhap");
 		mav.addObject("message","Lấy lại mật khẩu thành công");
 		return mav;
+	}
+	@RequestMapping(value = "/user/active-email", method = RequestMethod.GET)
+	public ModelAndView activeEmailview(HttpServletRequest request) {
+		String email = request.getParameter("email");
+		UserDTO user = userService.findByEmail(email);
+		String usertoken = randomString();
+		user.setUsertoken(usertoken);
+		userService.save(user);
+		String url = "http://localhost:8080/active-email?id="+usertoken;
+		String content = "Xin hãy nhấn vào link này \n "+url;
+		sendEmail("dotanthanhvlog@gmail.com", email, "PTITSTAY Kích hoạt email", content);
+		String urlChuyenhuong = "redirect:/user/info?id=" + user.getId();
+		ModelAndView mav = new ModelAndView(urlChuyenhuong);
+		mav.addObject("message","Xin vui lòng kiểm tra email!");
+		return mav;
+	}
+	@RequestMapping(value = "/active-email", method = RequestMethod.GET)
+	public ModelAndView activeEmail(HttpServletRequest request) {
+		String usertoken = request.getParameter("id");
+		ModelAndView mav = new ModelAndView("redirect:/dang-nhap");
+		
+		UserDTO user = userService.findByUserToken(usertoken);
+		if(user ==null){
+			
+			mav.addObject("message","Token không đúng");
+			 return mav;
+		}
+		user.setUsertoken("");
+		user.setIsActiveEmail("1");
+		user.setType("activeEmail");
+		userService.save(user);
+		String url = "redirect:/user/info?id=" + user.getId();
+		ModelAndView mav1 = new ModelAndView(url);
+		mav1.addObject("message","Kích hoạt email thành công");
+		
+		return mav1;
 	}
 }

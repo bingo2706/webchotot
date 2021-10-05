@@ -1415,4 +1415,9 @@ img {
   background-color: #5cb85c;
   color: white;
 }
-
+  .icon-check{
+  	color:green;
+  }
+  .icon-close{
+  	color:red;
+  }

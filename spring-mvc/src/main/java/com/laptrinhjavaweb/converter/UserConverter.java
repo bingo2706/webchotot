@@ -19,6 +19,7 @@ public class UserConverter {
 		result.setDob(entity.getDob());
 		result.setThumbnail(entity.getThumbnail());
 		result.setUsertoken(entity.getUsertoken());
+		result.setIsActiveEmail(entity.getIsActiveEmail());
 		for( int i=0 ; i<entity.getRoles().size();i++){
 			result.setRoleCode(entity.getRoles().get(i).getCode());
 		}
@@ -34,6 +35,7 @@ public class UserConverter {
 		result.setPhonenumber(dto.getPhonenumber());
 		result.setStatus(dto.getStatus());
 		result.setDob(dto.getDob());
+		result.setIsActiveEmail(dto.getIsActiveEmail());
 		
 		return result;
 	}
@@ -43,8 +45,11 @@ public class UserConverter {
 		result.setFullName(dto.getFullname());	
 		result.setEmail(dto.getEmail());
 		result.setPhonenumber(dto.getPhonenumber());
-		result.setStatus(dto.getStatus());
+		
 		result.setUsertoken(dto.getUsertoken());
+		if(dto.getStatus() !=null) result.setStatus(dto.getStatus());
+	    
+		
 		return result;
 	}
 }
