@@ -24,6 +24,17 @@ public class ProductEntity extends BaseEntity {
 	@Column(name = "status")
 	private Long status;
 	
+	@Column(name="view")
+	private Long view;
+	
+	public Long getView() {
+		return view;
+	}
+
+	public void setView(Long view) {
+		this.view = view;
+	}
+
 	public Long getStatus() {
 		return status;
 	}

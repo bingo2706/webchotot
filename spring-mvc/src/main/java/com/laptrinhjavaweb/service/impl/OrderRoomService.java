@@ -15,6 +15,7 @@ import com.laptrinhjavaweb.repository.OrderRoomRepository;
 import com.laptrinhjavaweb.repository.ProductRepository;
 import com.laptrinhjavaweb.service.INewService;
 import com.laptrinhjavaweb.service.IOrderRoomService;
+import com.opensymphony.sitemesh.compatability.OldDecorator2NewDecorator;
 
 @Service
 public class OrderRoomService implements IOrderRoomService{
@@ -69,12 +70,21 @@ public class OrderRoomService implements IOrderRoomService{
 
 	@Override
 	public OrderRoomDTO save(OrderRoomDTO dto) {
+		
 		ProductEntity product = productRepository.findOne(dto.getProductId());
 		OrderRoomEntity entity = new OrderRoomEntity();
 		entity = orderRoomConverter.toEntity(dto);
 		entity.setProduct(product);
 		
 		return orderRoomConverter.toDto(orderRoomRepository.save(entity));
+	}
+
+	@Override
+	public int activeOrder(Long id) {
+		OrderRoomEntity order = orderRoomRepository.findOne(id);
+		order.setStatus("1");
+		orderRoomRepository.save(order);
+		return 1;
 	}
 
 }

@@ -20,6 +20,7 @@ public interface INewService {
 	List<ProductDetailDTO> findListProductDetailByProduct(Long id);
 	List<ProductDTO> findAllByFilter(Long categoryid, String title,String address,Float min,Float max);
 	List<ProductDTO> findListProductByUserID(Long id);
+	List<ProductDTO> findProductPopulator();
 	void delete(long[] ids);
 	void deleteDetail(long[] ids);
 	void deleteImg(long [] ids);

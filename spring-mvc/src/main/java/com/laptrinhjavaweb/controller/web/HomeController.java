@@ -93,8 +93,9 @@ public class HomeController {
 		mav.addObject("categories",categoryModel);
 		mav.addObject("slides",slideModel);
 		
-		
-		
+		//product popular
+		List<ProductDTO> productPopular = newService.findProductPopulator();
+		mav.addObject("productPopular",productPopular);
 		
 		return mav;
 	}
@@ -369,5 +370,14 @@ public class HomeController {
 		mav.addObject("model",models);
 		return mav;
 	}
-	
+	@RequestMapping(value = "/user/active-order", method = RequestMethod.GET)
+	public ModelAndView activeOrder(HttpServletRequest request) {
+		Long id = Long.parseLong(request.getParameter("id"));
+		Long iduser = Long.parseLong(request.getParameter("userId"));
+		orderService.activeOrder(id);
+		String url = "redirect:/user/list-order?id=" + iduser;
+		ModelAndView mav = new ModelAndView(url);
+		mav.addObject("message","Chuyển trạng thái đơn hàng thành công");
+		return mav;
+	}
 }

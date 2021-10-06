@@ -6,10 +6,10 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.laptrinhjavaweb.controller.admin.UserController;
 import com.laptrinhjavaweb.converter.ProductConverter;
 import com.laptrinhjavaweb.converter.ProductDetailConverter;
 import com.laptrinhjavaweb.converter.ProductImageConverter;
@@ -18,7 +18,6 @@ import com.laptrinhjavaweb.dao.INewDAO;
 import com.laptrinhjavaweb.dto.ProductDTO;
 import com.laptrinhjavaweb.dto.ProductDetailDTO;
 import com.laptrinhjavaweb.dto.ProductImageDTO;
-import com.laptrinhjavaweb.dto.UserDTO;
 import com.laptrinhjavaweb.entity.CategoryEntity;
 import com.laptrinhjavaweb.entity.ProductDetailEntity;
 import com.laptrinhjavaweb.entity.ProductEntity;
@@ -112,7 +111,9 @@ public class NewService implements INewService{
 		ProductEntity newEntity = new ProductEntity();
 		if(dto.getId() != null){
 			ProductEntity oldNew = newRepository.findOne(dto.getId());
-		
+			if(dto.getType().equals("addview")){
+				oldNew.setView(oldNew.getView()+1);
+			}
 			oldNew.setCategory(categoryEntity);
 			newEntity = newConverter.toEntity(oldNew, dto);
 		}else{
@@ -284,6 +285,17 @@ public class NewService implements INewService{
 				listProduct.add(dto);	
 			}
 			return listProduct;
+	}
+
+	@Override
+	public List<ProductDTO> findProductPopulator() {
+		List<ProductDTO> models = new ArrayList<>();
+		List<ProductEntity> entities = newRepository.findProductPopulator();
+		for(ProductEntity item: entities){
+			ProductDTO dto = newConverter.toDto(item);
+			models.add(dto);
+		}
+		return models;
 	}
 
 	

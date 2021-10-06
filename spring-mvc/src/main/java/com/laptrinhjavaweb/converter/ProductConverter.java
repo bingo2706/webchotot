@@ -51,7 +51,7 @@ public class ProductConverter {
 		result.setAddress(entity.getAddress());
 		result.setStatus(entity.getStatus());
 		result.setCreatedBy(entity.getCreatedBy());
-	
+		result.setView(entity.getView());
 		
 		return result;
 	}
@@ -62,6 +62,7 @@ public class ProductConverter {
 		result.setShortDescription(dto.getShortDescription());
 		result.setAddress(dto.getAddress());
 		result.setStatus(dto.getStatus());
+		result.setView(Long.parseLong("0"));
 		return result;
 	}
 	public ProductEntity toEntity(ProductEntity result ,ProductDTO dto){
@@ -70,6 +71,7 @@ public class ProductConverter {
 		result.setShortDescription(dto.getShortDescription());
 		result.setAddress(dto.getAddress());
 		result.setStatus(dto.getStatus());
+	
 		return result;
 	}
 }

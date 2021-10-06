@@ -143,6 +143,8 @@ public class ProductController {
 		UserDTO userModel = new UserDTO();
 		cmtModel.setListResult(commentService.findAllByProductId(id));
 		model = newService.findById(id);
+		model.setType("addview");
+		newService.save(model);
 		model.setListDetail(newService.findListProductDetailByProduct(id));
 		userModel = userService.findByUserNameAndStatus(model.getCreatedBy());
 	//	model.setListImg(newService.findListImgageByProduct(id));

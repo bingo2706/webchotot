@@ -16,6 +16,7 @@ public class OrderRoomConverter {
 		result.setFullname(entity.getFullname());
 		result.setPhonenumber(entity.getPhonenumber());
 		result.setProductId(entity.getProduct().getId());
+		result.setStatus(entity.getStatus());
 		return result;
 	}
 	
@@ -25,6 +26,8 @@ public class OrderRoomConverter {
 		result.setFullname(dto.getFullname());
 		result.setEmail(dto.getEmail());
 		result.setPhonenumber(dto.getPhonenumber());
+		result.setStatus("0");
 		return result;
 	}
+
 }

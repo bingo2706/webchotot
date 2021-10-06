@@ -18,6 +18,13 @@ public class ProductDTO extends AbstractDTO<ProductDTO> {
 	private String address;
 	private Long status;
 	private String name;
+	private Long view;
+	public Long getView() {
+		return view;
+	}
+	public void setView(Long view) {
+		this.view = view;
+	}
 	private List<ProductDetailDTO> listDetail;
 	private List<OrderRoomDTO> listOrder;
 	public List<OrderRoomDTO> getListOrder() {

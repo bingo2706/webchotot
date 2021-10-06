@@ -15,6 +15,7 @@
   <div style="padding-top: 140px; display:flex;justify-content: center;flex-direction: column;align-items: center;">
   <h3 class="heading">Danh sách đơn đặt phòng</h3>
   <table class="table">
+   <security:authentication property="principal" var="user"/>
   <tr>
   
   	<th>Mã đơn</th>
@@ -23,6 +24,8 @@
 	<th>Số điện thoại</th>
 	<th>Địa chỉ</th>
 	<th>Mã phòng</th>
+	<th>Trạng thái</th>
+	<th>Thao tác</th>
   </tr>
   <c:forEach var="item" items="${model}">
   	<tr>
@@ -32,8 +35,22 @@
  		<td>${item.email }</td>
  		<td>${item.phonenumber }</td>
  		<td>${item.address }</td>
- 		<td>${item.productId }</td>
+ 		<td> <a target="blank" href="<c:url value="/product/detail?id=${item.productId } "/>">${item.productId }</a>   </td>
+ 		<td style="width:15%">
+ 		<c:if test="${item.status == 0}">
+ 			<span class="inActiveOrder">Chưa liên hệ</span>
+ 		</c:if>
+ 		<c:if test="${item.status == 1}">
+ 			<span class="activeOrder" style="">Đã liên hệ</span>
+ 		</c:if>
+ 		</td>
+ 		<td style="width:12%"> 
+ 		<c:if test="${item.status == 0}">
+ 			<a  href="<c:url value="/user/active-order?id=${item.id }&userId=${user.id } "/>" class="btn btn-blue">Xác nhận</a> 
+ 		</c:if>
  		
+ 		
+ 		</td>
  	</tr>
   </c:forEach>
  	
@@ -42,7 +59,7 @@
 </table>
   <div class="box-button">
  	
- 	 <security:authentication property="principal" var="user"/>
+ 	
  	
  	
  	<a href="<c:url value="/user/info?id=${user.id }"/>" style="margin-left:10px;" class="btn btn-blue">Quay lại</a>

@@ -19,6 +19,17 @@ public class OrderRoomEntity extends BaseEntity{
 	@Column(name="phonenumber")
 	private String phonenumber;
 	
+	@Column(name="status")
+	private String status;
+	
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public String getEmail() {
 		return email;
 	}

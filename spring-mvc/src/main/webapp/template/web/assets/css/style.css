@@ -1421,3 +1421,39 @@ img {
   .icon-close{
   	color:red;
   }
+ .inActiveOrder{
+ padding: 5px 10px;
+    color: white;
+    background: #c72a26;
+    border-color: #d43f3a;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 600;
+ }
+ .activeOrder{
+ padding: 5px 10px;
+    color: white;
+    background: #307d30;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 600;
+ }
+ .lable-hot{
+     background-color: rgb(245, 154, 0);
+    border-color: rgb(245, 154, 0);
+    color: rgb(255, 255, 255);
+ 	position: absolute;
+    display: block;
+    padding: 0 30px;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 700;
+    z-index: 9;
+    height: 40px;
+    line-height: 55px;
+    top: -8px;
+    font-size: 12px;
+    right: auto;
+    right: -192px;
+    transform: rotate(45deg);
+ }

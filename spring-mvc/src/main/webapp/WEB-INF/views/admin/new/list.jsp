@@ -58,6 +58,7 @@
 								<th>Tên bài viết</th>
 								<th>Hình đại diện</th>
 								<th>Danh mục</th>
+								<th>Lượt xem</th>
 								<th>Ngày tạo</th>
 								<th>Thao tác</th>
 							</tr>
@@ -72,6 +73,7 @@
 								
 									<td> <img alt="photo" style="width:50px; height:50px;" src="<c:url value='/template/admin/thumbnail/${item.thumbnail }'/>">  </td>
 									<td>${item.categoryName}</td>
+									<td>${item.view }</td>
 									<td>${item.createdDate}</td>
 									<td><c:url var="editURL" value="/admin-new/create">
 

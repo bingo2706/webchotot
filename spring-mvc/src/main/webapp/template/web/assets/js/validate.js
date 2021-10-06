@@ -213,23 +213,55 @@ function showPhoneFunction(){
     document.getElementById("box-sdt").style.display ="inline-block";
    
 }
+let navText = ["<i class='bx bx-chevron-left'></i>", "<i class='bx bx-chevron-right'></i>"]
+$('.slide-owl').owlCarousel({
+    loop: true,
+    margin: 10,
+    dots: true,
 
+    autoplay: true,
+    autoplayTimeout: 3000,
+    responsive: {
 
-$('.owl-carousel').owlCarousel({
-    loop:true,
-    margin:10,
-    dots:true,
-
-    autoplay:true,
-    autoplayTimeout:3000,
-    responsive:{
-        
-        1000:{
-            items:1
+        1000: {
+            items: 1
         }
     }
-    })
-    
+})
+$('.product-slide').owlCarousel({
+    items: 2,
+    dots: false,
+    nav: true,
+    navText: navText,
+   
+    responsive: {
+        500: {
+            items: 2
+        },
+        1280: {
+            items: 5
+        },
+        1600: {
+            items: 6
+        }
+    }
+})
+
+//$('.owl-carousel').owlCarousel({
+//    loop:true,
+//    margin:10,
+//    dots:true,
+//
+//    autoplay:true,
+//    autoplayTimeout:3000,
+//    responsive:{
+//        
+//        1000:{
+//            items:1
+//        }
+//    }
+//    })
+//    
 if(address_2 = localStorage.getItem('address_2_saved')) {
   $('select[name="calc_shipping_district"] option').each(function() {
     if($(this).text() == address_2) {
