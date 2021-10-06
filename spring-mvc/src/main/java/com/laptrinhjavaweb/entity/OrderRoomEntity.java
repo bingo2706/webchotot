@@ -7,7 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity
+@Entity(name="orderroom")
 @Table(name = "orderRoom")
 public class OrderRoomEntity extends BaseEntity{
 	@Column(name="email")

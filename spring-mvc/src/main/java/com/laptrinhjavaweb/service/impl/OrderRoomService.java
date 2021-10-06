@@ -44,20 +44,27 @@ public class OrderRoomService implements IOrderRoomService{
 
 	@Override
 	public List<OrderRoomDTO> findListOrderByUserId(Long id) {
-		List<OrderRoomDTO> orderDTO = new ArrayList<>();
+		List<OrderRoomDTO> models = new ArrayList<>();
+		List<OrderRoomEntity> entities = orderRoomRepository.getListOrderByUserId(id);
+		for(OrderRoomEntity item : entities){
 		
-		List<ProductDTO> productDtO = new ArrayList<>();
-		productDtO=	newservice.findListProductByUserID(id);
-		for(int i =0 ; i< productDtO.size();i++){
-			for(int j = 0;j<productDtO.get(i).getListOrder().size();j++){
-				OrderRoomDTO dto = productDtO.get(i).getListOrder().get(j);
-				orderDTO.add(dto);
-			}
-			
-			
+			OrderRoomDTO dto = orderRoomConverter.toDto(item);
+			models.add(dto);
 		}
+// 		Cách 2: 
+//		List<ProductDTO> productDtO = new ArrayList<>();
+//		productDtO=	newservice.findListProductByUserID(id);
+//		for(int i =0 ; i< productDtO.size();i++){
+//			for(int j = 0;j<productDtO.get(i).getListOrder().size();j++){
+//				OrderRoomDTO dto = productDtO.get(i).getListOrder().get(j);
+//				models.add(dto);
+//			}
+//			
+//			
+//		}
 		
-		return orderDTO;
+		
+		return models;
 	}
 
 	@Override
