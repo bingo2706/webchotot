@@ -9,60 +9,72 @@
 </head>
 <body>
 
-	 
-	
-		<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+
+	<link
+		href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+		rel="stylesheet" id="bootstrap-css">
 	<div style="padding-top: 140px;">
-		<div style="margin-bottom: 40px; margin-top: 0px; padding-top: 50px;" class="container register">
-    <div class="row">
-        <div class="col-md-3 register-left">
-            <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
-            <h3>Welcome</h3>
+		<div style="margin-bottom: 40px; margin-top: 0px; padding-top: 50px;"
+			class="container register">
+			<div class="row">
+				<div class="col-md-3 register-left">
+					<img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
+					<h3>Welcome</h3>
 
-        </div>
-        <div class="col-md-9 register-right">
-            <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
-            </ul>
-            <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    <form action="j_spring_security_check" method="post">
-                        <h3 class="register-heading">Đăng nhập tài khoản</h3>
-                        
-                        <div class="row register-form">
-                         <c:if test="${param.incorrectAccount != null}">
-						<div style="margin-bottom: 18px;margin-left: 191px;" class="alert alert-danger">Tài khoản hoặc mật khẩu
-							không đúng</div>
-							</c:if>
-				    		<c:if test="${param.accessDenied != null}">
-										<div style="margin-bottom: 18px;margin-left: 191px;" class="alert alert-danger">
-										Bạn không có quyền truy cập vào trang này
-											</div>
+				</div>
+				<div class="col-md-9 register-right">
+					<ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+					</ul>
+					<div class="tab-content" id="myTabContent">
+						<div class="tab-pane fade show active" id="home" role="tabpanel"
+							aria-labelledby="home-tab">
+							<form id="loginForm" action="j_spring_security_check"
+								method="post" autocomplete="off">
+								<h3 class="register-heading">Đăng nhập tài khoản</h3>
+
+								<div class="row register-form">
+									<c:if test="${param.incorrectAccount != null}">
+										<div style="margin-bottom: 18px; margin-left: 191px;"
+											class="alert alert-danger">Tài khoản hoặc mật khẩu
+											không đúng</div>
 									</c:if>
-									<div id="message" style="margin-bottom: 18px;margin-left: 191px; display:none" class="alert alert-success"></div>
-                            <div style="margin-left:177px;" class="col-md-6">
-                               
-                                <div class="form-group">
-                                    <input type="text" asp-for="UserName" class="form-control"  name="j_username" placeholder="UserName *"  />
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" asp-for="Password" name="j_password" class="form-control" placeholder="Password *"  />
-                                </div>
-                                <a href="<c:url value="/forgotpassword"/>">Quên mật khẩu</a>
-								  <input type="submit" class="btnRegister" value="Đăng nhập" />
-                            </div>
-                          
-                        </div>
-                    </form>
-                    
-                </div>
+									<c:if test="${param.accessDenied != null}">
+										<div style="margin-bottom: 18px; margin-left: 191px;"
+											class="alert alert-danger">Bạn không có quyền truy cập
+											vào trang này</div>
+									</c:if>
+									<div id="message"
+										style="margin-bottom: 18px; margin-left: 191px; display: none"
+										class="alert alert-success"></div>
+									<div style="margin-left: 177px;" class="col-md-6">
 
-            </div>
-        </div>
-    </div>
+										<div class="form-group">
+											<input type="text" asp-for="UserName" class="form-control"
+												name="j_username" placeholder="UserName *" />
+										</div>
+										<div class="form-group">
+											<input type="password" asp-for="Password" name="j_password"
+												class="form-control" placeholder="Password *" />
+										</div>
+										<a href="<c:url value="/forgotpassword"/>">Quên mật khẩu</a> <input
+											type="submit" class="btnRegister" value="Đăng nhập" />
+									</div>
 
-</div>
+								</div>
+							</form>
+
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+		</div>
+		
 	</div>
 	
+
 	<script type="text/javascript">
 	const queryString = window.location.search;
 	const urlParams = new URLSearchParams(queryString);
@@ -76,6 +88,33 @@
 			$(".alert").fadeOut();
 		}, 3000);
 	}
+	
+	
+	 $("#loginForm").validate({
+		 rules: {
+			 j_username: {
+			      required: true
+			    },
+			 j_password:{
+				required: true
+			}
+	 
+		},
+			 
+			messages:{
+				j_username:{
+					required:"Bạn chưa nhập tài khoản"
+				},
+				j_password:{
+					required:"Bạn chưa nhập mật khẩu"
+				}
+			},
+	 
+		 submitHandler: function(form) {
+			 form.submit();
+		    
+		  }
+		 });
 	</script>
 </body>
 

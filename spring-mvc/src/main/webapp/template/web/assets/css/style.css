@@ -214,8 +214,8 @@ body{
 }
 /*==================CATEGORY=============*/
 .category__heading{
-    font-size: 1.6rem;
-    font-weight: 500;
+    font-size: 1.7rem;
+    font-weight: 600;
     padding: 20px 20px 0 20px;
 }
 .box-category{
@@ -259,7 +259,7 @@ body{
     border: 1px solid rgb(244, 244, 244);
 }
 .box-full-flex:hover{
-    box-shadow: 0 1px 7px 0 rgb(0 0 0 / 30%);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
 }
 .box-item{
     padding: 14px;
@@ -1456,4 +1456,8 @@ img {
     right: auto;
     right: -192px;
     transform: rotate(45deg);
+ }
+ .error{
+ 	color:red;
+ 
  }

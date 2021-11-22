@@ -177,36 +177,8 @@
 		 document.querySelector("#thumbnail").value = name;
 		 document.querySelector("#base64").value = base64;
 	    });
-	 function addNew(data) {
-	        $.ajax({
-	            url: '${APIurl}',
-	            type: 'POST',
-	            contentType: 'application/json',
-	            data: JSON.stringify(data),
-	            dataType: 'json',
-	            success: function (result) {
-	            	window.location.href = "${NewURL}?page=1&limit=10";
-	            },
-	            error: function (error) {
-	            	window.location.href = "${NewURL}?page=1&limit=10";
-	            }
-	        });
-	    }
-	    function updateNew(data) {
-	        $.ajax({
-	            url: '${APIurl}',
-	            type: 'PUT',
-	            contentType: 'application/json',
-	            data: JSON.stringify(data),
-	            dataType: 'json',
-	            success: function (result) {
-	            	window.location.href = "${NewURL}?page=1&limit=10";
-	            },
-	            error: function (error) {
-	            	window.location.href = "${NewURL}?page=1&limit=10";
-	            }
-	        });
-	    }
+	
+	  
 	     function myFunction1() {
 	    	var p = document.getElementById("province");
 			var d = document.getElementById("district");
@@ -225,7 +197,97 @@
 			document.getElementById("address").value = address1+", "+address;
 		
 		} 
-	    
+	    // VALIDATOR
+	     $("#formSubmit").validate({
+		 rules: {
+			 title: {
+			      required: true
+			    },
+			
+			shortDescription: {
+				  required: true,
+				  
+			},
+			address: {
+			      required: true,
+			     
+			    },
+			name: {
+				required: true,
+				
+				 },
+		    content: {
+			      required: true
+					 },
+			originalPrice: {
+				 required: true,
+					     
+					    },
+			 price: {
+				required: true,
+						
+						 },
+			stock: {
+				required: true
+				},		
+			acreage: {
+					required: true
+					},	
+					calc_shipping_provinces: {
+						required: true
+						},		
+						calc_shipping_district: {
+							required: true
+							},	
+		},
+			 
+			messages:{
+				 title: {
+				      required: "Tên phòng không được bỏ trống"
+				    },
+				
+				shortDescription: {
+					  required: "Mô tả ngắn không được bỏ trống",
+					  
+				},
+				address: {
+				      required: "Địa chỉ không được bỏ trống",
+				     
+				    },
+				name: {
+					required: "Tên loại phòng không được bỏ trống",
+					
+					 },
+			    content: {
+				      required: "Nội dung không được bỏ trống"
+						 },
+				originalPrice: {
+					 required: "Giá tiền gốc không được bỏ trống",
+						     
+						    },
+				 price: {
+					required: "Giá tiền hiện tại không được bỏ trống",
+							
+							 },
+				stock: {
+					required: "Số lượng không được bỏ trống"
+					},		
+				acreage: {
+						required: "Diện tích không được bỏ trống"
+						},	
+						calc_shipping_provinces: {
+							required: "Thành phố không được bỏ trống"
+							},		
+							calc_shipping_district: {
+								required: "Quận huyện không được bỏ trống"
+								},	
+			},
+	 
+		 submitHandler: function(form) {
+			 form.submit();
+		    
+		  }
+		 });
 	</script>
 </body>
 </html>

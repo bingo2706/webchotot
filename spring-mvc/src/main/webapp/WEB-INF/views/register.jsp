@@ -47,7 +47,7 @@
                                     <input type="email" asp-for="Email" name="email" class="form-control" placeholder="Your Email *"  />
                                 </div>
                                 <div class="form-group">
-                                    <input type="text" asp-for="PhoneNumber" name="phonenumber" minlength="10" maxlength="10" name="txtEmpPhone" class="form-control" placeholder="Your Phone *"  />
+                                    <input type="text" asp-for="PhoneNumber" name="phonenumber"  name="txtEmpPhone" class="form-control" placeholder="Your Phone *"  />
                                 </div>
                                 <div class="form-group">
                                     <input type="date" asp-for="Dob" name="dob" class="form-control" placeholder="Your Dob *"  />
@@ -69,24 +69,60 @@
 	</div>
 	
    <script>
-   $('#btnAddOrUpdateNew').click(function (e) {
-      
-   });
-function addNew(data) {
-       $.ajax({
-           url: '${APIurl}',
-           type: 'POST',
-           contentType: 'application/json',
-           data: JSON.stringify(data),
-           dataType: 'json',
-           success: function (result) {
-           	window.location.href = "${NewURL}";
-           },
-           error: function (error) {
-           	window.location.href = "${NewURL}";
-           }
-       });
-   }
+   $("#formSubmit").validate({
+		 rules: {
+			 fullname: {
+			      required: true
+			    },
+			 username:{
+				required: true
+			},
+			password: {
+				  required: true,
+				  minlength:6
+			},
+			email: {
+			      required: true,
+			      email:true
+			    },
+			phonenumber: {
+				   required: true,
+				   minlength:10
+				 },
+				 dob: {
+					   required: true
+					 },
+		},
+			 
+			messages:{
+				fullname:{
+					required:"Bạn chưa nhập họ tên"
+				},
+				username:{
+					required:"Bạn chưa nhập tên đăng nhập"
+				},
+				password: {
+					  required: "Bạn chưa nhập mật khẩu",
+					  minlength:"Mật khẩu tối thiểu 6 kí tự"
+				},
+				email: {
+				      required: "Bạn chưa nhập email",
+				      email:"Email chưa đúng định dạng"
+				    },
+				phonenumber: {
+					  required: "Bạn chưa nhập số điện thoại",
+					  minlength:"Số điện thoại tối thiểu 10 số"
+					    },   
+				 dob: {
+						required: "Bạn chưa chọn ngày sinh"
+						},
+			},
+	 
+		 submitHandler: function(form) {
+			 form.submit();
+		    
+		  }
+		 });
    </script>
 </body>
 </html>
