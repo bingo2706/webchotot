@@ -68,7 +68,7 @@
 								<th>Giá gốc</th>
 								<th>Diện tích</th>
 								<th>Số lượng</th>
-								
+								<th>Thao tác</th>
 							</tr>
 						</thead>
 
@@ -89,7 +89,11 @@
 									<td><f:formatNumber value="${item.originalPrice}" type="currency"/>  VNĐ</td>
 									<td>${item.acreage}</td>
 									<td>${item.stock}</td>
-									
+									<td><c:url var="editProductDetail" value="/admin-new/detail/update">
+
+											<c:param name="id" value="${item.id}" />
+										</c:url> <a 
+										href='${editProductDetail}'>Chỉnh sửa </a></td>
 									
 										
 										

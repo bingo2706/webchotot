@@ -95,10 +95,10 @@
    
    
   <c:if test="${not empty model.id }">
-  		<button type="submit" class="btn btn-primary" id="btnAddOrUpdateNew">Cập nhật bài viết</button>
+  		<button type="submit" class="btn btn-primary" id="btnAddOrUpdateNew">Cập nhật phòng</button>
   </c:if>
   <c:if test="${empty model.id }">
-  		<button type="submit" class="btn btn-primary" id="btnAddOrUpdateNew">Thêm bài viết</button>
+  		<button type="submit" class="btn btn-primary" id="btnAddOrUpdateNew">Thêm phòng</button>
   </c:if>
   <c:if test="${not empty model.id }">
    <input type="hidden" value="${model.id}" id="id" name="id"/>

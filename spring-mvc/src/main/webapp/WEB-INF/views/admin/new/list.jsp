@@ -27,7 +27,13 @@
 				<div class="table-btn-controls">
 					<div class="pull-right tableTools-container">
 						<div class="dt-buttons btn-overlap btn-group">
-							
+							<a flag="info"
+								class="dt-button buttons-colvis btn btn-white btn-primary btn-bold"
+								data-toggle="tooltip" title='Thêm bài viết'
+								href='<c:url value="/admin-new/create"/>'> <span>
+									<i class="fa fa-plus-circle bigger-110 purple"></i>
+							</span>
+							</a>
 							<form action="/api/deleteProduct" method="POST">
 							<input type="hidden" name="ids" id="ids" >
 							<input type="hidden" value="admin" name="type"/>
@@ -72,13 +78,22 @@
 									<td>
 										
 										
-										<c:url var="editImg" value="/admin-new/detail">
+										<c:url var="viewDetail" value="/admin-new/detail">
 
 											<c:param name="id" value="${item.id}" />
 										</c:url> <a 
-										href='${editImg}'>Xem </a>
+										href='${viewDetail}'>Xem </a>
 										
-										
+										<c:url var="editProduct" value="/admin-new/create">
+
+											<c:param name="id" value="${item.id}" />
+										</c:url> <a 
+										href='${editProduct}'>Chỉnh sửa </a>
+										<c:url var="addProductDetail" value="/admin-new/detail/create">
+
+											<c:param name="id" value="${item.id}" />
+										</c:url> <a 
+										href='${addProductDetail}'>Thêm chi tiết </a>
 										
 										<c:url var="editImg" value="/admin-slide/create">
 
@@ -129,7 +144,7 @@
         }).get();
 		document.querySelector("#ids").value = ids;
 	
-	//	deleteNew(ids);
+	
 	});
 	
 	</script>
