@@ -130,36 +130,7 @@
 		 document.querySelector("#thumbnail").value = name;
 		 document.querySelector("#base64").value = base64;
 	    });
-	 function addNew(data) {
-	        $.ajax({
-	            url: '${APIurl}',
-	            type: 'POST',
-	            contentType: 'application/json',
-	            data: JSON.stringify(data),
-	            dataType: 'json',
-	            success: function (result) {
-	            	window.location.href = "${NewURL}?page=1&limit=5";
-	            },
-	            error: function (error) {
-	            	window.location.href = "${NewURL}?page=1&limit=5";
-	            }
-	        });
-	    }
-	    function updateNew(data) {
-	        $.ajax({
-	            url: '${APIurl}',
-	            type: 'PUT',
-	            contentType: 'application/json',
-	            data: JSON.stringify(data),
-	            dataType: 'json',
-	            success: function (result) {
-	            	window.location.href = "${NewURL}?page=1&limit=5";
-	            },
-	            error: function (error) {
-	            	window.location.href = "${NewURL}?page=1&limit=5";
-	            }
-	        });
-	    }
+	 
 	</script>
 </body>
 </html>

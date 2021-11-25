@@ -40,11 +40,17 @@ public class SlideService implements ISlideService{
 
 	@Override
 	public SlideDTO save(SlideDTO dto) {
-		ProductEntity productEntity = productRepository.findOne(dto.getProductId());
+		ProductEntity productEntity = null;
+		if(dto.getProductId() != null){
+			productEntity = productRepository.findOne(dto.getProductId());
+		}
+		
 		SlideEntity entity = new SlideEntity();
 		if(dto.getId() != null){
 			SlideEntity oldEntity = slideRepository.findOne(dto.getId());
-			oldEntity.setProduct(productEntity);
+			if(dto.getProductId() != null){
+				oldEntity.setProduct(productEntity);
+			}			
 			entity = slideConverter.toEntity(oldEntity, dto);
 		}else{
 			

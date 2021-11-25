@@ -29,13 +29,7 @@
 				<div class="table-btn-controls">
 					<div class="pull-right tableTools-container">
 						<div class="dt-buttons btn-overlap btn-group">
-							<a flag="info"
-								class="dt-button buttons-colvis btn btn-white btn-primary btn-bold"
-								data-toggle="tooltip" title='Thêm chi tiết'
-								href='<c:url value="/admin-new/create"/>'> <span>
-									<i class="fa fa-plus-circle bigger-110 purple"></i>
-							</span>
-							</a>
+							
 							<form action="/api/deleteDetail" method="POST">
 							<input type="hidden" name="ids" id="ids" >
 							<input type="hidden" value="admin" name="type"/>
@@ -74,7 +68,7 @@
 								<th>Giá gốc</th>
 								<th>Diện tích</th>
 								<th>Số lượng</th>
-								<th>Thao tác</th>
+								
 							</tr>
 						</thead>
 
@@ -96,25 +90,7 @@
 									<td>${item.acreage}</td>
 									<td>${item.stock}</td>
 									
-									<td>
-										
-										
-										<c:url var="editImg" value="/admin-new/addImg">
-
-											<c:param name="id" value="${item.id}" />
-										</c:url> <a class="btn btn-sm btn-primary btn-edit"
-										data-toggle="tooltip" title="Thêm hình ảnh"
-										href='${editImg}'><i class="fas fa-pen-square"></i></i> </a>
-										
-										<c:url var="editImg" value="/admin-new/detail/update">
-
-											<c:param name="id" value="${item.id}" />
-										</c:url> <a class="btn btn-sm btn-primary btn-edit"
-										data-toggle="tooltip" title="Cập nhật chi tiết"
-										href='${editImg}'><i class="fas fa-pen-square"></i></i> </a>
-										
-										
-										</td>
+									
 										
 										
 								</tr>
@@ -135,24 +111,7 @@
 		</div>
 	</div>
 	<script>
-	/* $(function () {
-		var currentPage = ${model.page};
-		var totalPage = ${model.totalPage};
-		var limit = 5;
-		window.pagObj = $('#pagination').twbsPagination({
-			totalPages: totalPage,
-			visiblePages: 10,
-			startPage: currentPage,
-			onPageClick: function (event, page) {
-				if (currentPage != page){
-					$('#limit').val(limit);
-					$('#page').val(page);
-					$('#formSubmit').submit();
-				}
-				
-			}
-		});
-	}); */
+
 	$("#btnDelete").click(function() {
 		
 		var ids = $('tbody input[type=checkbox]:checked').map(function () {
@@ -163,20 +122,7 @@
 	//	deleteNew(ids);
 	});
 	
-	function deleteNew(data) {
-        $.ajax({
-            url: '${APIurl}',
-            type: 'DELETE',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (result) {
-                window.location.href = "${NewURL}?page=1&limit=10";
-            },
-            error: function (error) {
-            	window.location.href = "${NewURL}?page=1&limit=10";
-            }
-        });
-    }
+
 	var numberArr = [];
 	function myFunction1(id) {
 	
@@ -193,20 +139,7 @@
 	$("#btnDeleteImg").click(function() {
 		document.querySelector("#idsIMG").value = numberArr
 	});
-	function deleteIMG(data) {
-        $.ajax({
-            url: '${APIurlImg}',
-            type: 'DELETE',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (result) {
-                window.location.href = "${NewURL}?page=1&limit=10";
-            },
-            error: function (error) {
-            	window.location.href = "${NewURL}?page=1&limit=10";
-            }
-        });
-    }
+	
 	</script>
 </body>
 

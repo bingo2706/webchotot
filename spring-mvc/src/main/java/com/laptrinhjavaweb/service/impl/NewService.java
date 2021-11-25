@@ -6,7 +6,6 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +24,7 @@ import com.laptrinhjavaweb.entity.ProductImageEntity;
 import com.laptrinhjavaweb.entity.UserEntity;
 import com.laptrinhjavaweb.repository.CategoryRepository;
 import com.laptrinhjavaweb.repository.CommentRepository;
+import com.laptrinhjavaweb.repository.OrderRoomRepository;
 import com.laptrinhjavaweb.repository.ProductDetailRepository;
 import com.laptrinhjavaweb.repository.ProductImageRepository;
 import com.laptrinhjavaweb.repository.ProductRepository;
@@ -69,7 +69,7 @@ public class NewService implements INewService{
     private UserRepository userRepository;
     
     @Autowired
-    private UserConverter userConverter;
+    private OrderRoomRepository orderRoomRepository;
     
 	@Override
 	public List<ProductDTO> findAll(Pageable pageable) {
@@ -144,6 +144,7 @@ public class NewService implements INewService{
 					productDetailRepository.delete(item.getId());
 					slideRepository.deleteByProduct_id(id);
 					commentRepository.deleteByProduct_id(id);
+					orderRoomRepository.deleteByProduct_id(id);
 				}		
 				newRepository.delete(id);
 				

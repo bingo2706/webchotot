@@ -90,7 +90,11 @@ public class UserService implements IUserService{
 
 	@Override
 	public void delete(long[] ids) {
-		
+		for(long id : ids){
+			UserEntity user = userRepository.findOne(id);
+			user.setStatus(0);
+			userRepository.save(user);
+		}
 		
 	}
 
@@ -112,6 +116,13 @@ public class UserService implements IUserService{
 			return dto;
 		}
 		return userConverter.toDto(entity);
+	}
+
+	@Override
+	public void activeUser(long id) {
+		UserEntity user = userRepository.findOne(id);
+		user.setStatus(1);
+		userRepository.save(user);
 	}
 
 }

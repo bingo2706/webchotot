@@ -29,7 +29,7 @@ public class CategoryConverter {
 		results.setName(dto.getName());
 		results.setCode(dto.getCode());
 		results.setStatus(dto.getStatus());
-		results.setThumbnail(dto.getThumbnail());
+		
 		return results;
 	}
 }

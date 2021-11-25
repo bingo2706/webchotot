@@ -27,13 +27,7 @@
 				<div class="table-btn-controls">
 					<div class="pull-right tableTools-container">
 						<div class="dt-buttons btn-overlap btn-group">
-							<a flag="info"
-								class="dt-button buttons-colvis btn btn-white btn-primary btn-bold"
-								data-toggle="tooltip" title='Thêm trình chiếu'
-								href='<c:url value="/admin-slide/create"/>'> <span>
-									<i class="fa fa-plus-circle bigger-110 purple"></i>
-							</span>
-							</a>
+							
 							<form action="/api/deleteSlide" method="POST">
 							<input type="hidden" name="ids" id="ids" >
 								<button id="btnDelete" type="submit"
@@ -74,12 +68,11 @@
 									<td> <img alt="photo" style="width:50px; height:50px;" src="<c:url value='/template/admin/thumbnail/${item.thumbnail }'/>">  </td>
 									<td>${item.productId}</td>
 									<td>${item.createdDate}</td>
-									<td><c:url var="editURL" value="/admin-slide/create">
+									<td><c:url var="editURL" value="/admin-slide/edit">
 
 											<c:param name="id" value="${item.id}" />
-										</c:url> <a class="btn btn-sm btn-primary btn-edit"
-										data-toggle="tooltip" title="Cập nhật trình chiếu"
-										href='${editURL}'><i class="fas fa-pen-square"></i></i> </a></td>
+										</c:url> <a 
+										href='${editURL}'>Chỉnh sửa </a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -125,20 +118,7 @@
 	
 	//	deleteNew(ids);
 	});
-	function deleteNew(data) {
-        $.ajax({
-            url: '${APIurl}',
-            type: 'DELETE',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (result) {
-                window.location.href = "${NewURL}?page=1&limit=5";
-            },
-            error: function (error) {
-            	window.location.href = "${NewURL}?page=1&limit=5";
-            }
-        });
-    }
+	
 	</script>
 </body>
 

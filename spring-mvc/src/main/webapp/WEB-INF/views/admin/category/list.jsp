@@ -38,7 +38,7 @@
 							<input type="hidden" name="ids" id="ids" >
 								<button id="btnDelete" type="submit"
 								class="dt-button buttons-html5 btn btn-white btn-primary btn-bold"
-								data-toggle="tooltip" title='Xóa danh mucj'>
+								data-toggle="tooltip" title='Xóa danh mục'>
 								<span> <i class="far fa-trash-alt"></i>
 								</span>
 							</button>
@@ -74,9 +74,9 @@
 									<td><c:url var="editURL" value="/admin-category/create">
 
 											<c:param name="id" value="${item.id}" />
-										</c:url> <a class="btn btn-sm btn-primary btn-edit"
-										data-toggle="tooltip" title="Cập nhật danh mục"
-										href='${editURL}'><i class="fas fa-pen-square"></i></i> </a></td>
+										</c:url> <a class=""
+										
+										href='${editURL}'>Chỉnh sửa</a></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -122,20 +122,7 @@
 	
 	//	deleteNew(ids);
 	});
-	function deleteNew(data) {
-        $.ajax({
-            url: '${APIurl}',
-            type: 'DELETE',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (result) {
-                window.location.href = "${NewURL}?page=1&limit=5";
-            },
-            error: function (error) {
-            	window.location.href = "${NewURL}?page=1&limit=5";
-            }
-        });
-    }
+	
 	</script>
 </body>
 

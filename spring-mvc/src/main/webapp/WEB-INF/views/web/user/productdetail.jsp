@@ -79,20 +79,7 @@
 	//	deleteNew(ids);
 	});
 	
-	function deleteNew(data) {
-      $.ajax({
-          url: '${APIurl}',
-          type: 'DELETE',
-          contentType: 'application/json',
-          data: JSON.stringify(data),
-          success: function (result) {
-              window.location.href = "${NewURL}?page=1&limit=10";
-          },
-          error: function (error) {
-          	window.location.href = "${NewURL}?page=1&limit=10";
-          }
-      });
-  }
+	
 	var numberArr = [];
 	function myFunction1(id) {
 	
@@ -109,20 +96,7 @@
 	$("#btnDeleteImg").click(function() {
 		document.querySelector("#idsIMG").value = numberArr
 	});
-	function deleteIMG(data) {
-        $.ajax({
-            url: '${APIurlImg}',
-            type: 'DELETE',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (result) {
-                window.location.href = "${NewURL}?page=1&limit=10";
-            },
-            error: function (error) {
-            	window.location.href = "${NewURL}?page=1&limit=10";
-            }
-        });
-    }
+	
   </script>
 </body>
 </html>

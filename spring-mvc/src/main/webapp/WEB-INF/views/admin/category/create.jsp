@@ -41,13 +41,14 @@
     <label for="shortDescription">Mã code</label>
     <input type="text" class="form-control" id="code" name="code" value="${model.code }" >
   </div>
+   <c:if test="${empty model.id }">
   <div class="form-group">
     <label for="thumbnail">Hình đại diện</label>
     <input type="file" class="form-control" id="uploadImage" value="${model.thumbnail }" >
       <input type="hidden" class="form-control" id="thumbnail" name ="thumbnail" >
     <input type="hidden" class="form-control" id="base64" name="base64">
   </div>
-
+  </c:if>
   <c:if test="${not empty model.id }">
   		<button type="submit" class="btn btn-primary" id="btnAddOrUpdateNew">Cập nhật danh mục</button>
   </c:if>
@@ -84,36 +85,7 @@
 			 document.querySelector("#base64").value = base64;
 	       
 	    });
-	 function addNew(data) {
-	        $.ajax({
-	            url: '${APIurl}',
-	            type: 'POST',
-	            contentType: 'application/json',
-	            data: JSON.stringify(data),
-	            dataType: 'json',
-	            success: function (result) {
-	            	window.location.href = "${NewURL}?page=1&limit=5";
-	            },
-	            error: function (error) {
-	            	window.location.href = "${NewURL}?page=1&limit=5";
-	            }
-	        });
-	    }
-	    function updateNew(data) {
-	        $.ajax({
-	            url: '${APIurl}',
-	            type: 'PUT',
-	            contentType: 'application/json',
-	            data: JSON.stringify(data),
-	            dataType: 'json',
-	            success: function (result) {
-	            	window.location.href = "${NewURL}?page=1&limit=5";
-	            },
-	            error: function (error) {
-	            	window.location.href = "${NewURL}?page=1&limit=5";
-	            }
-	        });
-	    }
+	
 	</script>
 </body>
 </html>

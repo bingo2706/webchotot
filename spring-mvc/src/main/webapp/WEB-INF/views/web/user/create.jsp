@@ -90,36 +90,7 @@ $('#uploadImage').change(function () {
 	 $('#btnAddOrUpdateNew').click(function (e) {
 	      
 	    });
-	 function addNew(data) {
-	        $.ajax({
-	            url: '${APIurl}',
-	            type: 'POST',
-	            contentType: 'application/json',
-	            data: JSON.stringify(data),
-	            dataType: 'json',
-	            success: function (result) {
-	            	window.location.href = "${NewURL}?page=1&limit=10";
-	            },
-	            error: function (error) {
-	            	window.location.href = "${NewURL}?page=1&limit=10";
-	            }
-	        });
-	    }
-	    function updateNew(data) {
-	        $.ajax({
-	            url: '${APIurl}',
-	            type: 'PUT',
-	            contentType: 'application/json',
-	            data: JSON.stringify(data),
-	            dataType: 'json',
-	            success: function (result) {
-	            	window.location.href = "${NewURL}?page=1&limit=10";
-	            },
-	            error: function (error) {
-	            	window.location.href = "${NewURL}?page=1&limit=10";
-	            }
-	        });
-	    }
+	 
 	   
 	    
 	</script>

@@ -34,13 +34,14 @@
       		<form:form style="margin: 40px; width:40%;" action="/api/createSlide" method="POST" modelAttribute="model" id="formSubmit">
   <div class="form-group">
     <label for="title">Tên trình chiếu</label>
-    <input type="text" class="form-control" id="name" name="name"  >
+    <input type="text" class="form-control" id="name" name="name"   >
   
   </div>
  <div class="form-group">
     <label for="shortDescription">Mô tả</label>
-    <input type="text" class="form-control" id="description" name="description"  >
+    <input type="text" class="form-control" id="description" name="description"   >
   </div>
+ 
   <div class="form-group">
     <label for="thumbnail">Hình đại diện</label>
     <input type="file" class="form-control" id="uploadImage" >
@@ -48,15 +49,13 @@
     <input type="hidden" class="form-control" id="base64" name="base64">
   </div>
 
-  <c:if test="${not empty model.id }">
-  		<button type="submit" class="btn btn-primary" id="btnAddOrUpdateNew">Cập nhật trình chiếu</button>
-  </c:if>
-  <c:if test="${empty model.id }">
-  		<button type="submit" class="btn btn-primary" id="btnAddOrUpdateNew">Thêm trình chiếu</button>
-  </c:if>
+
   
-   <input type="hidden" value="${model.productId}" id="productId" name="productId"/>
+  		<button type="submit" class="btn btn-primary" id="btnAddOrUpdateNew">Thêm trình chiếu</button>
+  		 <input type="hidden" value="${model.productId}" id="productId" name="productId"/>
    <input type= "hidden" value = 1 id="status" name = "status">
+ 
+  
 </form:form>
 </div>
 	<script type="text/javascript">

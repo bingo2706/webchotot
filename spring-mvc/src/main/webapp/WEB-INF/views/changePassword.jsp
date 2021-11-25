@@ -46,6 +46,7 @@
                                 </div>
                                 <security:authentication property="principal" var="user"/>
                                 <input type="hidden" name="id" value=${user.id } />
+                                  <input type="hidden" name="type" value="password"} />
 								  <input onclick="handleChangePassword()"  type="button" class="btnRegister" value="Submit" />
                             </div>
                           

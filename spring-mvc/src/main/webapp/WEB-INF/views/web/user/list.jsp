@@ -70,20 +70,7 @@
 	
 	//	deleteNew(ids);
 	});
-	function deleteNew(data) {
-      $.ajax({
-          url: '${APIurl}',
-          type: 'DELETE',
-          contentType: 'application/json',
-          data: JSON.stringify(data),
-          success: function (result) {
-              window.location.href = "${NewURL}?page=1&limit=10";
-          },
-          error: function (error) {
-          	window.location.href = "${NewURL}?page=1&limit=10";
-          }
-      });
-  }
+	
   </script>
 </body>
 </html>

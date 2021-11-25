@@ -27,13 +27,7 @@
 				<div class="table-btn-controls">
 					<div class="pull-right tableTools-container">
 						<div class="dt-buttons btn-overlap btn-group">
-							<a flag="info"
-								class="dt-button buttons-colvis btn btn-white btn-primary btn-bold"
-								data-toggle="tooltip" title='Thêm bài viết'
-								href='<c:url value="/admin-new/create"/>'> <span>
-									<i class="fa fa-plus-circle bigger-110 purple"></i>
-							</span>
-							</a>
+							
 							<form action="/api/deleteProduct" method="POST">
 							<input type="hidden" name="ids" id="ids" >
 							<input type="hidden" value="admin" name="type"/>
@@ -75,34 +69,22 @@
 									<td>${item.categoryName}</td>
 									<td>${item.view }</td>
 									<td>${item.createdDate}</td>
-									<td><c:url var="editURL" value="/admin-new/create">
-
-											<c:param name="id" value="${item.id}" />
-										</c:url> <a class="btn btn-sm btn-primary btn-edit"
-										data-toggle="tooltip" title="Cập nhật sản phẩm"
-										href='${editURL}'><i class="fas fa-pen-square"></i></i> </a>
+									<td>
 										
 										
 										<c:url var="editImg" value="/admin-new/detail">
 
 											<c:param name="id" value="${item.id}" />
-										</c:url> <a class="btn btn-sm btn-primary btn-edit"
-										data-toggle="tooltip" title="Xem chi tiết"
-										href='${editImg}'><i class="fas fa-pen-square"></i></i> </a>
+										</c:url> <a 
+										href='${editImg}'>Xem </a>
 										
-										<c:url var="editImg" value="/admin-new/detail/create">
-
-											<c:param name="id" value="${item.id}" />
-										</c:url> <a class="btn btn-sm btn-primary btn-edit"
-										data-toggle="tooltip" title="Thêm chi tiết"
-										href='${editImg}'><i class="fas fa-pen-square"></i></i> </a>
+										
 										
 										<c:url var="editImg" value="/admin-slide/create">
 
 											<c:param name="id" value="${item.id}" />
-										</c:url> <a class="btn btn-sm btn-primary btn-edit"
-										data-toggle="tooltip" title="Tạo trình chiếu"
-										href='${editImg}'><i class="fas fa-pen-square"></i></i> </a>
+										</c:url> <a 
+										href='${editImg}'> Tạo Slide </a>
 										</td>
 								</tr>
 							</c:forEach>
@@ -149,20 +131,7 @@
 	
 	//	deleteNew(ids);
 	});
-	function deleteNew(data) {
-        $.ajax({
-            url: '${APIurl}',
-            type: 'DELETE',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (result) {
-                window.location.href = "${NewURL}?page=1&limit=5";
-            },
-            error: function (error) {
-            	window.location.href = "${NewURL}?page=1&limit=5";
-            }
-        });
-    }
+	
 	</script>
 </body>
 

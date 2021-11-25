@@ -34,12 +34,15 @@
 									<i class="fa fa-plus-circle bigger-110 purple"></i>
 							</span>
 							</a>
-							<button id="btnDelete" type="button"
+							<form action="/api/deleteUser" method="POST">
+							<input type="hidden" name="ids" id="ids" >
+								<button id="btnDelete" type="submit"
 								class="dt-button buttons-html5 btn btn-white btn-primary btn-bold"
 								data-toggle="tooltip" title='Xóa tài khoản'>
 								<span> <i class="far fa-trash-alt"></i>
 								</span>
 							</button>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -57,6 +60,7 @@
 								<th>Hình đại diện</th>
 								<th>Email</th>
 								<th>SĐT</th>
+								<th>Trạng thái</th>
 								<th>Thao tác</th>
 							</tr>
 						</thead>
@@ -80,12 +84,24 @@
 									
 									</td>
 									<td>${item.phonenumber}</td>
-									<td><c:url var="editURL" value="/admin-user/create">
+									<td>
+										<c:if test="${item.status ==0 }">
+												Không hoạt động
+										</c:if >
+										<c:if test="${item.status ==1 }">
+												Hoạt động
+										</c:if>
+									</td >
+									<td style="width:14%"><c:url var="editURL" value="/admin-user/create">
 
 											<c:param name="id" value="${item.id}" />
-										</c:url> <a class="btn btn-sm btn-primary btn-edit"
-										data-toggle="tooltip" title="Cập nhật tài khoản"
-										href='${editURL}'><i class="fas fa-pen-square"></i></a>										
+										</c:url> <a 
+										href='${editURL}'>Chỉnh sửa</a>		
+												<c:url var="activeURL" value="/admin-user/activeUser">
+
+											<c:param name="id" value="${item.id}" />
+										</c:url> <a 
+										href='${activeURL}'>Kích hoạt</a>								
 										</td>
 								</tr>
 							</c:forEach>
@@ -123,29 +139,16 @@
 			}
 		});
 	});
-	$("#btnDelete").click(function() {
+$("#btnDelete").click(function() {
 		
 		var ids = $('tbody input[type=checkbox]:checked').map(function () {
             return $(this).val();
         }).get();
-		
+		document.querySelector("#ids").value = ids;
 	
-		deleteNew(ids);
+	//	deleteNew(ids);
 	});
-	function deleteNew(data) {
-        $.ajax({
-            url: '${APIurl}',
-            type: 'DELETE',
-            contentType: 'application/json',
-            data: JSON.stringify(data),
-            success: function (result) {
-                window.location.href = "${NewURL}?page=1&limit=5";
-            },
-            error: function (error) {
-            	window.location.href = "${NewURL}?page=1&limit=5";
-            }
-        });
-    }
+	
 	</script>
 </body>
 

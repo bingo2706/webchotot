@@ -92,21 +92,7 @@ public class ProductController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/admin-category", method = RequestMethod.GET)
-	public ModelAndView categoryPage(@RequestParam("page") int page, 
-			                     @RequestParam("limit") int limit) {
-		ModelAndView mav = new ModelAndView("admin/category/list");
-		CategoryDTO models = new CategoryDTO();
-		models.setLimit(limit);
-		models.setPage(page);
-		Sort sort = new Sort(Sort.Direction.ASC, "name");
-		Pageable pageable = new PageRequest(page-1, limit, sort);
-		models.setListResult(categoryService.findAllList(pageable));
-		models.setTotalItem(categoryService.getTotalItem());
-		models.setTotalPage((int) Math.ceil((double) models.getTotalItem() / models.getLimit()));
-		mav.addObject("model",models);
-		return mav;
-	}
+	
 	
 	@RequestMapping(value = "/admin-new/create", method = RequestMethod.GET)
 	public ModelAndView CreatePage(@RequestParam(value = "id",required = false)Long id) {
@@ -119,17 +105,7 @@ public class ProductController {
 		mav.addObject("model",model);
 		return mav;
 	}
-	@RequestMapping(value = "/admin-category/create", method = RequestMethod.GET)
-	public ModelAndView CreateCategoryPage(@RequestParam(value = "id",required = false)Long id) {
-		ModelAndView mav = new ModelAndView("admin/category/create");
-		CategoryDTO model = new CategoryDTO();
-		if( id != null){
-			model = categoryService.findById(id);
-		}
-		
-		mav.addObject("model",model);
-		return mav;
-	}
+	
 	@RequestMapping(value = "/admin-new/addImg", method = RequestMethod.GET)
 	public ModelAndView addImgPage(@RequestParam(value = "id",required = false)Long id) {
 		ModelAndView mav = new ModelAndView("admin/new/addimg");	
@@ -153,135 +129,7 @@ public class ProductController {
 		mav.addObject("userModel",userModel);
 		return mav;
 	}
-	@RequestMapping(value = "/admin-slide", method = RequestMethod.GET)
-	public ModelAndView slidePage(@RequestParam("page") int page, 
-			                     @RequestParam("limit") int limit) {
-		ModelAndView mav = new ModelAndView("admin/slide/list");
-		SlideDTO models = new SlideDTO();
-		models.setLimit(limit);
-		models.setPage(page);
-		Sort sort = new Sort(Sort.Direction.ASC, "name");
-		Pageable pageable = new PageRequest(page-1, limit, sort);
-		models.setListResult(slideService.findAll(pageable));
-	
-		models.setTotalItem(slideService.getTotalItem());
-		models.setTotalPage((int) Math.ceil((double) models.getTotalItem() / models.getLimit()));
-		mav.addObject("model",models);
-		return mav;
-	}
-	@RequestMapping(value = "/admin-slide/create", method = RequestMethod.GET)
-	public ModelAndView CreateSlide(@RequestParam(value = "id",required = false)Long id) {
-		ModelAndView mav = new ModelAndView("admin/slide/create");
-		
-		return mav;
-	}
-  // ==================== API-ADMIN===============
-	
-	//============= SLIDE ================
-	@RequestMapping(value = "/api/createSlide", method = RequestMethod.POST)
-	public ModelAndView createSlide(HttpServletRequest request) throws InterruptedException {
-		SlideDTO slideDTO = FormUtil.toModel(SlideDTO.class, request);
-		 try {
-	            byte[] decodeBase64 = Base64.getDecoder().decode(slideDTO.getBase64().getBytes());
-	            uploadFileUtils.writeOrUpdate(decodeBase64, "/thumbnail/"+slideDTO.getThumbnail());
-	          
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-		 Thread.sleep(4500);
-		 slideDTO = slideService.save(slideDTO);
-		
-		 return new ModelAndView("redirect:/admin-slide?page=1&limit=5");
-	}
-	@SuppressWarnings("null")
-	@RequestMapping(value = "/api/deleteSlide", method = RequestMethod.POST)
-	public ModelAndView deleteSlide(HttpServletRequest request) {
-		  String []a = request.getParameter("ids").split(",");
-		  int size = a.length;
-	      long [] arr = new long [size];
-	      for(int i=0; i<size; i++) {
-	         arr[i] = Long.parseLong(a[i]);
-	      }		
-		  slideService.delete(arr);
-		 return new ModelAndView("redirect:/admin-slide?page=1&limit=5");
-	}
-	//====================== CATEGORY=================
-	
-	@RequestMapping(value = "/api/createCategory", method = RequestMethod.POST)
-	public ModelAndView createCategory(HttpServletRequest request) throws InterruptedException {
-		CategoryDTO category = FormUtil.toModel(CategoryDTO.class, request);
-		 try {
-	            byte[] decodeBase64 = Base64.getDecoder().decode(category.getBase64().getBytes());
-	            uploadFileUtils.writeOrUpdate(decodeBase64, "/thumbnail/"+category.getThumbnail());
-	            
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-		 Thread.sleep(4500);
-		 category = categoryService.save(category);
-		 return new ModelAndView("redirect:/admin-category?page=1&limit=5");
-	}
-	@SuppressWarnings("null")
-	@RequestMapping(value = "/api/deleteCategory", method = RequestMethod.POST)
-	public ModelAndView deleteCategory(HttpServletRequest request) {
-		  String []a = request.getParameter("ids").split(",");
-		  int size = a.length;
-	      long [] arr = new long [size];
-	      for(int i=0; i<size; i++) {
-	         arr[i] = Long.parseLong(a[i]);
-	      }		
-	      categoryService.delete(arr);
-		 return new ModelAndView("redirect:/admin-category?page=1&limit=5");
-	}
-	//======================= USER =====================
-	@RequestMapping(value = "/api/createUser", method = RequestMethod.POST)
-	public ModelAndView createUser(HttpServletRequest request) throws InterruptedException {
-		UserDTO user = new UserDTO();
-		user.setFullname(request.getParameter("fullname"));
-		user.setEmail(request.getParameter("email"));
-		user.setUsername(request.getParameter("username"));
-		user.setPassword(request.getParameter("password"));
-		user.setPhonenumber(request.getParameter("phonenumber"));
-		user.setThumbnail(request.getParameter("thumbnail"));
-		user.setBase64(request.getParameter("base64"));
-		user.setRoleCode(request.getParameter("roleCode"));
-		
-		String date = request.getParameter("dob");
-		if(request.getParameter("id") == null){
-			 Date dob = null;
-				try {
-					dob = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dob"));
-					 user.setDob(dob);
-					 user.setStatus(Integer.parseInt(request.getParameter("status")));
-				} catch (ParseException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}  
-				
-		}else{
-			user.setId(Long.parseLong(request.getParameter("id")));
-		}
-		
-		 try {
-	            byte[] decodeBase64 = Base64.getDecoder().decode(user.getBase64().getBytes());
-	            uploadFileUtils.writeOrUpdate(decodeBase64, "/thumbnail/"+user.getThumbnail());
-	           
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	        }
-		 Thread.sleep(4500);
-		 user = userService.save(user);
-		 if(request.getParameter("type").equals("edit")){
-			 String url = "redirect:/user/info?id=" + request.getParameter("id");
-			 return new ModelAndView(url);
-		 }
-		 if(request.getParameter("type").equals("create")){
-			 return new ModelAndView("redirect:/dang-nhap");
-		 }
 
-		 return new ModelAndView("redirect:/admin-user?page=1&limit=5");
-	}
-	//=========================== PRODUCT =======================
 	@RequestMapping(value = "/api/createProduct", method = RequestMethod.POST)
 	public ModelAndView createProduct(HttpServletRequest request) throws InterruptedException {
 		ProductDTO product = FormUtil.toModel(ProductDTO.class, request);
@@ -391,20 +239,5 @@ public class ProductController {
 			 }
 		 return new ModelAndView("redirect:/admin-new?page=1&limit=5");
 	}
-	//====================== COMMENT =========================
-	@RequestMapping(value = "/api/createCMT", method = RequestMethod.POST)
-	public ModelAndView createCMT(HttpServletRequest request) {
-		CommentDTO cmt = FormUtil.toModel(CommentDTO.class, request);
-		
-		cmt = commentService.save(cmt);
-		String url = "redirect:/product/detail/?id=" + request.getParameter("productId");
-		 return new ModelAndView(url);
-	}
-	@RequestMapping(value = "/api/deleteCMT", method = RequestMethod.POST)
-	public ModelAndView deleteCMT(HttpServletRequest request) {
-		Long id = Long.parseLong(request.getParameter("id"));
-		String url = "redirect:/product/detail/?id=" + request.getParameter("productId");
-		commentService.delete(id);
-		 return new ModelAndView(url);
-	}
+	
 }

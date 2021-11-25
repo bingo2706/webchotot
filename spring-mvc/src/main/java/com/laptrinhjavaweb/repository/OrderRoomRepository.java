@@ -11,4 +11,5 @@ public interface OrderRoomRepository extends JpaRepository<OrderRoomEntity, Long
 	@Query("select o from orderroom o,user u, "
 			+ "product p where o.product.id = p.id and u.userName = p.createdBy and u.id = ?1")
 	public List<OrderRoomEntity> getListOrderByUserId(Long id);
+	void deleteByProduct_id(Long product_id);
 }

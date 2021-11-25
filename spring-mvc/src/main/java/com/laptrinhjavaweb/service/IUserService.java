@@ -15,4 +15,5 @@ public interface IUserService {
 	UserDTO findByUserNameAndStatus (String username);
 	int getTotalItem();
 	void delete(long[] ids);
+	void activeUser (long id);
 }
