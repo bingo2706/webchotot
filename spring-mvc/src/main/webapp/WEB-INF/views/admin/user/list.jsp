@@ -17,7 +17,9 @@
 			<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
 			<li class="breadcrumb-item active">Danh sách tài khoản</li>
 		</ol>
-
+<div id="message"
+		   style=" margin-left:20px; display: none"
+			class="alert alert-success col-4"></div>
 		<!-- DataTables Example -->
 		<div class="card mb-3">
 			<div class="card-header">
@@ -121,6 +123,18 @@
 		</div>
 	</div>
 	<script>
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	const message = urlParams.get('message')
+	if(message){
+		document.getElementById("message").innerHTML = message; 
+		
+		document.getElementById("message").style.display = "block";
+		setTimeout(function() {
+			$(".alert").fadeOut();
+		}, 3000);
+	}
+	
 	$(function () {
 		var currentPage = ${model.page};
 		var totalPage = ${model.totalPage};

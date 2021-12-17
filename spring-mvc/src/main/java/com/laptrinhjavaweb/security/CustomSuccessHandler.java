@@ -32,7 +32,7 @@ public class CustomSuccessHandler extends SimpleUrlAuthenticationSuccessHandler{
 		String url = "";
 		List<String> roles = SecurityUtils.getAuthoriries();
 		if (isAdmin(roles)) {
-			url = "/admin-home";
+			url = "/admin-new?page=1&limit=5";
 		} else if (isUser(roles)) {
 			url = "/trang-chu?page=1&limit=10";
 		}

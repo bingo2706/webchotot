@@ -1,6 +1,9 @@
 package com.laptrinhjavaweb.dto;
 
+import javax.validation.constraints.NotBlank;
+
 public class CategoryDTO extends AbstractDTO<CategoryDTO> {
+	
 	
 	private String name;
 	private String code;

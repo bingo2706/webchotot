@@ -268,6 +268,7 @@ body{
     background-color: white;
     margin: 10px auto 0 auto;
     width:987.2px;
+    border-radius: 5px;
 }
 .box-item__img{
     width: 166px;

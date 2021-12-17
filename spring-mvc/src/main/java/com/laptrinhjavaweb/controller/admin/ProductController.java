@@ -1,9 +1,6 @@
 package com.laptrinhjavaweb.controller.admin;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Base64;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,24 +9,22 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.laptrinhjavaweb.dto.CategoryDTO;
 import com.laptrinhjavaweb.dto.CommentDTO;
 import com.laptrinhjavaweb.dto.ProductDTO;
 import com.laptrinhjavaweb.dto.ProductDetailDTO;
 import com.laptrinhjavaweb.dto.ProductImageDTO;
-import com.laptrinhjavaweb.dto.SlideDTO;
 import com.laptrinhjavaweb.dto.UserDTO;
 import com.laptrinhjavaweb.service.ICategoryService;
 import com.laptrinhjavaweb.service.ICommentService;
 import com.laptrinhjavaweb.service.INewService;
 import com.laptrinhjavaweb.service.ISlideService;
 import com.laptrinhjavaweb.service.IUserService;
-import com.laptrinhjavaweb.util.FormUtil;
 import com.laptrinhjavaweb.util.UploadFileUtils;
 
 @Controller(value = "newControllerOfAdmin")
@@ -122,7 +117,12 @@ public class ProductController {
 		model.setType("addview");
 		newService.save(model);
 		model.setListDetail(newService.findListProductDetailByProduct(id));
-		userModel = userService.findByUserNameAndStatus(model.getCreatedBy());
+		try {
+			userModel = userService.findByUserNameAndStatus(model.getCreatedBy());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 	//	model.setListImg(newService.findListImgageByProduct(id));
 		mav.addObject("model",model);
 		mav.addObject("cmt",cmtModel);
@@ -131,8 +131,8 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/api/createProduct", method = RequestMethod.POST)
-	public ModelAndView createProduct(HttpServletRequest request) throws InterruptedException {
-		ProductDTO product = FormUtil.toModel(ProductDTO.class, request);
+	public ModelAndView createProduct(@ModelAttribute ProductDTO product,HttpServletRequest request) throws InterruptedException {
+		
 		 try {
 	            byte[] decodeBase64 = Base64.getDecoder().decode(product.getBase64().getBytes());
 	            uploadFileUtils.writeOrUpdate(decodeBase64, "/thumbnail/"+product.getThumbnail());
@@ -144,13 +144,25 @@ public class ProductController {
 		 product = newService.save(product);
 		 
 		 if(request.getParameter("type").equals("web")){
+			
 			 String url = "redirect:/user/product?id="+ request.getParameter("userId");
-			 return new ModelAndView(url);
+			 ModelAndView mav = new ModelAndView(url);
+			 if(request.getParameter("id") != null){
+				 mav.addObject("message","Cập nhật phòng thành công");
+			 }else{
+				 mav.addObject("message","Tạo mới tin đăng thành công");
+			 }
+			 return mav;
 		 }
-		 
-		 return new ModelAndView("redirect:/admin-new?page=1&limit=5");
+		 ModelAndView mav = new ModelAndView("redirect:/admin-new?page=1&limit=5");
+		 if(request.getParameter("id") != null){
+			 mav.addObject("message","Cập nhật phòng thành công");
+		 }else{
+			 mav.addObject("message","Tạo mới tin đăng thành công");
+		 }
+		 return mav;
 	}
-	@SuppressWarnings("null")
+	
 	@RequestMapping(value = "/api/deleteProduct", method = RequestMethod.POST)
 	public ModelAndView deleteProduct(HttpServletRequest request) {
 		  String []a = request.getParameter("ids").split(",");
@@ -162,14 +174,18 @@ public class ProductController {
 	      newService.delete(arr);
 	      if(request.getParameter("type").equals("web")){
 				 String url = "redirect:/user/product?id="+ request.getParameter("userId");
-				 return new ModelAndView(url);
+				 ModelAndView mav = new ModelAndView(url);
+				 mav.addObject("message","Xóa tin đăng thành công");
+				 return mav;
 			 }
-		 return new ModelAndView("redirect:/admin-new?page=1&limit=5");
+	      ModelAndView mav = new ModelAndView("redirect:/admin-new?page=1&limit=5");
+	      mav.addObject("message","Xóa tin đăng thành công");
+		 return mav;
 	}
 	//====================== PRODUCT DETAIL ===============================
 	@RequestMapping(value = "/api/createDetail", method = RequestMethod.POST)
-	public ModelAndView createDetail(HttpServletRequest request) throws InterruptedException {
-		ProductDetailDTO detail = FormUtil.toModel(ProductDetailDTO.class, request);
+	public ModelAndView createDetail(@ModelAttribute ProductDetailDTO detail,HttpServletRequest request) throws InterruptedException {
+		
 		 try {
 	            byte[] decodeBase64 = Base64.getDecoder().decode(detail.getBase64().getBytes());
 	            uploadFileUtils.writeOrUpdate(decodeBase64, "/thumbnail/"+detail.getThumbnail());
@@ -182,12 +198,23 @@ public class ProductController {
 		 
 		 if(request.getParameter("type").equals("web")){
 			 String url = "redirect:/user/product/detail?id="+ request.getParameter("productId");
-			 return new ModelAndView(url);
+			 ModelAndView mav = new ModelAndView(url);
+			 if(request.getParameter("id") != null){
+				 mav.addObject("message","Cập nhật chi tiết phòng thành công");
+			 }else{
+				 mav.addObject("message","Tạo mới chi tiết phòng thành công");
+			 }
+			 return mav;
 		 }
-		 
-		 return new ModelAndView("redirect:/admin-new?page=1&limit=5");
+		 ModelAndView mav = new ModelAndView("redirect:/admin-new?page=1&limit=5");
+		 if(request.getParameter("id") != null){
+			 mav.addObject("message","Cập nhật chi tiết phòng thành công");
+		 }else{
+			 mav.addObject("message","Tạo mới chi tiết phòng thành công");
+		 }
+		 return mav;
 	}
-	@SuppressWarnings("null")
+	
 	@RequestMapping(value = "/api/deleteDetail", method = RequestMethod.POST)
 	public ModelAndView deleteDetail(HttpServletRequest request) {
 		  String []a = request.getParameter("ids").split(",");
@@ -199,15 +226,18 @@ public class ProductController {
 	      newService.deleteDetail(arr);
 	      if(request.getParameter("type").equals("web")){
 				 String url = "redirect:/user/product/detail?id="+ request.getParameter("productId");
-				 return new ModelAndView(url);
+				 ModelAndView mav = new ModelAndView(url);
+				 mav.addObject("message","Xóa chi tiết phòng thành công");
+				 return mav;
 			 }
-	   
-		 return new ModelAndView("redirect:/admin-new?page=1&limit=5");
+	      ModelAndView mav = new ModelAndView("redirect:/admin-new?page=1&limit=5");
+	      mav.addObject("message","Xóa chi tiết phòng thành công");
+		 return mav;
 	}
 	//====================== IMAGE ====================================
 	@RequestMapping(value = "/api/createImg", method = RequestMethod.POST)
-	public ModelAndView createImg(HttpServletRequest request) throws InterruptedException {
-		ProductImageDTO img = FormUtil.toModel(ProductImageDTO.class, request);
+	public ModelAndView createImg(@ModelAttribute ProductImageDTO img,HttpServletRequest request) throws InterruptedException {
+		 
 		 try {
 	            byte[] decodeBase64 = Base64.getDecoder().decode(img.getBase64().getBytes());
 	            uploadFileUtils.writeOrUpdate(decodeBase64, "/thumbnail/"+img.getThumbnail());
@@ -219,11 +249,22 @@ public class ProductController {
 		 img = newService.saveImg(img);
 		 if(request.getParameter("type").equals("web")){
 			 String url = "redirect:/user/product/detail?id="+ request.getParameter("pdId");
-			 return new ModelAndView(url);
+			 ModelAndView mav = new ModelAndView(url);
+			 if(request.getParameter("id") != null){
+				 mav.addObject("message","Cập nhật hình ảnh phòng thành công");
+			 }else{
+				 mav.addObject("message","Tạo mới hình ảnh phòng thành công");
+			 }
+			 return mav;
 		 }
-		 return new ModelAndView("redirect:/admin-new?page=1&limit=5");
+		 ModelAndView mav = new ModelAndView("redirect:/admin-new?page=1&limit=5");
+		 if(request.getParameter("id") != null){
+			 mav.addObject("message","Cập nhật hình ảnh phòng thành công");
+		 }else{
+			 mav.addObject("message","Tạo mới hình ảnh phòng thành công");
+		 }
+		 return mav;
 	}
-	@SuppressWarnings("null")
 	@RequestMapping(value = "/api/deleteImg", method = RequestMethod.POST)
 	public ModelAndView deleteImg(HttpServletRequest request) {
 		  String []a = request.getParameter("ids").split(",");
@@ -235,9 +276,13 @@ public class ProductController {
 	      newService.deleteImg(arr);
 	      if(request.getParameter("type").equals("web")){
 				 String url = "redirect:/user/product/detail?id="+ request.getParameter("productId");
-				 return new ModelAndView(url);
+				 ModelAndView mav = new ModelAndView(url);
+				 mav.addObject("message","Xóa hình ảnh phòng thành công");
+				 return mav;
 			 }
-		 return new ModelAndView("redirect:/admin-new?page=1&limit=5");
+	      ModelAndView mav = new ModelAndView("redirect:/admin-new?page=1&limit=5");
+	      mav.addObject("message","Xóa hình ảnh phòng thành công");
+		 return mav;
 	}
 	
 }

@@ -11,9 +11,15 @@
 <title>Thông tin tài khoản</title>
 </head>
 <body>
+
   <div style="padding-top: 140px; display:flex;justify-content: center;flex-direction: column;align-items: center;">
+  
   <h3 class="heading">Danh sách phòng</h3>
+  <div id="message"
+		   style=" margin-left:-548px; margin-bottom:10px;display: none"
+			class="alert alert-success col-4"></div>
   <table class="table">
+  
   <tr>
   <th><input type="checkbox" id="checkAll"></th>
   	<th>Mã phòng</th>
@@ -70,7 +76,17 @@
 	
 	//	deleteNew(ids);
 	});
-	
+  const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	const message = urlParams.get('message')
+	if(message){
+		document.getElementById("message").innerHTML = message; 
+		
+		document.getElementById("message").style.display = "block";
+		setTimeout(function() {
+			$(".alert").fadeOut();
+		}, 3000);
+	}
   </script>
 </body>
 </html>

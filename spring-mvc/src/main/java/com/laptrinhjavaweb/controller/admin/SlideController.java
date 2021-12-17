@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,8 +66,8 @@ public class SlideController {
 	}
 	//============= SLIDE ================
 		@RequestMapping(value = "/api/createSlide", method = RequestMethod.POST)
-		public ModelAndView createSlide(HttpServletRequest request) throws InterruptedException {
-			SlideDTO slideDTO = FormUtil.toModel(SlideDTO.class, request);
+		public ModelAndView createSlide(@ModelAttribute SlideDTO slideDTO,HttpServletRequest request) throws InterruptedException {
+			ModelAndView mav = new ModelAndView("redirect:/admin-slide?page=1&limit=5");
 			 try {
 		            byte[] decodeBase64 = Base64.getDecoder().decode(slideDTO.getBase64().getBytes());
 		            uploadFileUtils.writeOrUpdate(decodeBase64, "/thumbnail/"+slideDTO.getThumbnail());
@@ -76,12 +77,18 @@ public class SlideController {
 		        }
 			 Thread.sleep(4500);
 			 slideDTO = slideService.save(slideDTO);
-			
-			 return new ModelAndView("redirect:/admin-slide?page=1&limit=5");
+			 if(request.getParameter("id") != null){
+				 mav.addObject("message","Cập nhật trình chiếu phòng thành công");
+			 }else{
+				 mav.addObject("message","Tạo mới trình chiếu phòng thành công");
+			 }
+		
+			 return mav;
 		}
-		@SuppressWarnings("null")
+		
 		@RequestMapping(value = "/api/deleteSlide", method = RequestMethod.POST)
 		public ModelAndView deleteSlide(HttpServletRequest request) {
+			ModelAndView mav = new ModelAndView("redirect:/admin-slide?page=1&limit=5");
 			  String []a = request.getParameter("ids").split(",");
 			  int size = a.length;
 		      long [] arr = new long [size];
@@ -89,6 +96,8 @@ public class SlideController {
 		         arr[i] = Long.parseLong(a[i]);
 		      }		
 			  slideService.delete(arr);
-			 return new ModelAndView("redirect:/admin-slide?page=1&limit=5");
+			  mav.addObject("message","Xóa trình chiếu phòng thành công");
+			 return mav;
 		}
+	
 }

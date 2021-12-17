@@ -21,42 +21,43 @@
                     <a href="#">Trang chủ</a>
                 </li>
                
-                     <c:if test="${not empty model.id }">
+                     <c:if test="${not empty category.id }">
   					 <li style="margin-left:8px;" class="active">Chỉnh sửa danh mục</li> 
   					</c:if>
-                         <c:if test="${empty model.id }">
+                         <c:if test="${empty category.id }">
   					 <li style="margin-left:8px;" class="active">Thêm mới danh mục</li> 
   					</c:if>
               
             </ul><!-- /.breadcrumb -->
         </div>
      
-      		<form:form style="margin: 40px; width:40%;" action="/api/createCategory" method="POST" modelAttribute="model" id="formSubmit">
+      		<form:form style="margin: 40px; width:40%;" action="/api/createCategory" modelAttribute="category" method="POST"  id="formSubmit">
   <div class="form-group">
     <label for="title">Tên danh mục</label>
-    <input type="text" class="form-control" id="name" name="name" value="${model.name }" >
-  
+    <form:input type="text" class="form-control" id="name" path="name" value="${category.name }" />
+  	
   </div>
  <div class="form-group">
     <label for="shortDescription">Mã code</label>
-    <input type="text" class="form-control" id="code" name="code" value="${model.code }" >
+    <form:input type="text" class="form-control" id="code" path="code" value="${category.code }" />
+   
   </div>
-   <c:if test="${empty model.id }">
+   <c:if test="${empty category.id }">
   <div class="form-group">
     <label for="thumbnail">Hình đại diện</label>
-    <input type="file" class="form-control" id="uploadImage" value="${model.thumbnail }" >
+    <input type="file" class="form-control" id="uploadImage" name="uploadImage" value="${category.thumbnail }" >
       <input type="hidden" class="form-control" id="thumbnail" name ="thumbnail" >
     <input type="hidden" class="form-control" id="base64" name="base64">
   </div>
   </c:if>
-  <c:if test="${not empty model.id }">
+  <c:if test="${not empty category.id }">
   		<button type="submit" class="btn btn-primary" id="btnAddOrUpdateNew">Cập nhật danh mục</button>
   </c:if>
-  <c:if test="${empty model.id }">
+  <c:if test="${empty category.id }">
   		<button type="submit" class="btn btn-primary" id="btnAddOrUpdateNew">Thêm danh mục</button>
   </c:if>
-  <c:if test="${not empty model.id }">
-   <input type="hidden" value="${model.id}" id="id" name="id"/>
+  <c:if test="${not empty category.id }">
+   <input type="hidden" value="${category.id}" id="id" name="id"/>
     </c:if>
    <input type= "hidden" value = 1 id="status" name = "status">
 </form:form>
@@ -85,7 +86,36 @@
 			 document.querySelector("#base64").value = base64;
 	       
 	    });
-	
+	 $("#formSubmit").validate({
+		 rules: {
+			 name: {
+			      required: true
+			    },
+			 code:{
+				required: true
+			},
+			uploadImage:{
+				required: true
+			}
+		},
+			messages:{
+				name:{
+					required:"Bạn chưa nhập tên danh mục"
+				},
+				code:{
+					required:"Bạn chưa nhập mã danh mục"
+				},
+				uploadImage:{
+					required:"Bạn chưa chọn hình"
+				},
+				
+			},
+	 
+		 submitHandler: function(form) {
+			 form.submit();
+		    
+		  }
+		 });
 	</script>
 </body>
 </html>

@@ -44,8 +44,7 @@
 			</a>
 				<div class="dropdown-menu" aria-labelledby="pagesDropdown">
 					
-					<a class="dropdown-item" href="<c:url value='/admin-slide?page=1&limit=5'/>">Danh sách trình chiếu</a> <a
-						class="dropdown-item" href='<c:url value="/admin-slide/create"/>'>Tạo mới</a>
+					<a class="dropdown-item" href="<c:url value='/admin-slide?page=1&limit=5'/>">Danh sách trình chiếu</a> 
 				</div>
 				</li>
 		</ul>

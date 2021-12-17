@@ -104,7 +104,74 @@
 	       
 	    });
 
+	    //VALIDATOR
 	    
+	    $("#formSubmit").validate({
+		 rules: {
+			 name: {
+			      required: true
+					 },
+		    content: {
+			      required: true
+					 },
+			originalPrice: {
+				 required: true,
+					     
+					    },
+			 price: {
+				required: true,
+						
+						 },
+			stock: {
+				required: true
+				},		
+			acreage: {
+					required: true
+					},	
+					calc_shipping_provinces: {
+						required: true
+						},		
+						calc_shipping_district: {
+							required: true
+							},	
+		},
+			 
+			messages:{
+				
+				name: {
+					required: "Tên loại phòng không được bỏ trống",
+					
+					 },
+			    content: {
+				      required: "Nội dung không được bỏ trống"
+						 },
+				originalPrice: {
+					 required: "Giá tiền gốc không được bỏ trống",
+						     
+						    },
+				 price: {
+					required: "Giá tiền hiện tại không được bỏ trống",
+							
+							 },
+				stock: {
+					required: "Số lượng không được bỏ trống"
+					},		
+				acreage: {
+						required: "Diện tích không được bỏ trống"
+						},	
+						calc_shipping_provinces: {
+							required: "Thành phố không được bỏ trống"
+							},		
+							calc_shipping_district: {
+								required: "Quận huyện không được bỏ trống"
+								},	
+			},
+	 
+		 submitHandler: function(form) {
+			 form.submit();
+		    
+		  }
+		 });
 	    
 	</script>
 </body>

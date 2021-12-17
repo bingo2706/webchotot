@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,11 +21,11 @@ public class CommentController {
 	
 	//====================== COMMENT =========================
 		@RequestMapping(value = "/api/createCMT", method = RequestMethod.POST)
-		public ModelAndView createCMT(HttpServletRequest request) {
-			CommentDTO cmt = FormUtil.toModel(CommentDTO.class, request);
+		public ModelAndView createCMT(@ModelAttribute CommentDTO cmt) {
+			 
 			
 			cmt = commentService.save(cmt);
-			String url = "redirect:/product/detail/?id=" + request.getParameter("productId");
+			String url = "redirect:/product/detail/?id=" + cmt.getProductId();
 			 return new ModelAndView(url);
 		}
 		@RequestMapping(value = "/api/deleteCMT", method = RequestMethod.POST)

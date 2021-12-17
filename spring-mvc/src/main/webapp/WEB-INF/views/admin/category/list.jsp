@@ -17,12 +17,18 @@
 			<li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
 			<li class="breadcrumb-item active">Danh sách danh mục</li>
 		</ol>
-
+		<div id="message"
+		   style=" margin-left:20px; display: none"
+			class="alert alert-danger col-4"></div>
+			<div id="messageSuccess"
+		   style=" margin-left:20px; display: none"
+			class="alert alert-success col-4"></div>
 		<!-- DataTables Example -->
 		<div class="card mb-3">
 			<div class="card-header">
 				<i class="fas fa-table"></i> Danh sách danh mục
 			</div>
+			
 			<div style="margin: 10px 20px 0 auto;" class="widget-box table-filter">
 				<div class="table-btn-controls">
 					<div class="pull-right tableTools-container">
@@ -122,7 +128,26 @@
 	
 	//	deleteNew(ids);
 	});
-	
+	const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	const message = urlParams.get('message')
+	const messageSuccess = urlParams.get('messageSuccess')
+	if(message){
+		document.getElementById("message").innerHTML = message; 
+		
+		document.getElementById("message").style.display = "block";
+		setTimeout(function() {
+			$(".alert").fadeOut();
+		}, 3000);
+	}
+	if(messageSuccess){
+		document.getElementById("messageSuccess").innerHTML = messageSuccess; 
+		
+		document.getElementById("messageSuccess").style.display = "block";
+		setTimeout(function() {
+			$(".alert").fadeOut();
+		}, 3000);
+	}
 	</script>
 </body>
 

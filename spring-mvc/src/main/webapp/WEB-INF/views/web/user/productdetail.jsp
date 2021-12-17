@@ -14,6 +14,9 @@
 <body>
   <div style="padding-top: 140px; display:flex;justify-content: center;flex-direction: column;align-items: center;">
   <h3 class="heading">Danh sách chi tiết phòng</h3>
+  <div id="message"
+		   style=" margin-left:-474px; margin-bottom:10px;display: none"
+			class="alert alert-success col-4"></div>
   <table class="table">
   <tr>
   		<th><input type="checkbox" id="checkAll"></th>
@@ -69,6 +72,20 @@
  </div>
   </div>
   <script type="text/javascript">
+  
+  const queryString = window.location.search;
+	const urlParams = new URLSearchParams(queryString);
+	const message = urlParams.get('message')
+	if(message){
+		document.getElementById("message").innerHTML = message; 
+		
+		document.getElementById("message").style.display = "block";
+		setTimeout(function() {
+			$(".alert").fadeOut();
+		}, 30000);
+	}
+  
+  
   $("#btnDelete").click(function() {
 		
 		var ids = $('tbody input[type=checkbox]:checked').map(function () {

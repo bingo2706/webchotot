@@ -10,6 +10,7 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -198,8 +199,8 @@ public class UserController {
 		return mav1;
 	}
 	@RequestMapping(value = "/order", method = RequestMethod.POST)
-	public ModelAndView orderRoom(HttpServletRequest request) {
-		OrderRoomDTO orderDto = FormUtil.toModel(OrderRoomDTO.class, request);
+	public ModelAndView orderRoom(@ModelAttribute OrderRoomDTO orderDto,HttpServletRequest request) {
+		
 		String url = "redirect:/product/detail?id=" + orderDto.getProductId();
 		orderDto = orderService.save(orderDto);
 		

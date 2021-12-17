@@ -106,12 +106,14 @@ public class UserController {
 		 if(request.getParameter("type").equals("create")){
 			 return new ModelAndView("redirect:/dang-nhap");
 		 }
-
-		 return new ModelAndView("redirect:/admin-user?page=1&limit=5");
+		 ModelAndView mav = new ModelAndView("redirect:/admin-user?page=1&limit=5");
+		 mav.addObject("message","Tạo mới tài khoản người dùng thành công");
+		 return mav;
 	}
-	@SuppressWarnings("null")
+	
 	@RequestMapping(value = "/api/deleteUser", method = RequestMethod.POST)
 	public ModelAndView deleteSlide(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("redirect:/admin-user?page=1&limit=5");
 		  String []a = request.getParameter("ids").split(",");
 		  int size = a.length;
 	      long [] arr = new long [size];
@@ -119,12 +121,15 @@ public class UserController {
 	         arr[i] = Long.parseLong(a[i]);
 	      }		
 		  userService.delete(arr);
-		 return new ModelAndView("redirect:/admin-user?page=1&limit=5");
+		  mav.addObject("message","Vô hiệu hóa tài khoản thành công !");
+		 return mav;
 	}
 	@RequestMapping(value = "/admin-user/activeUser", method = RequestMethod.GET)
 	public ModelAndView activeUser(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("redirect:/admin-user?page=1&limit=5");
 		  long id =  Long.parseLong(request.getParameter("id")); 
 		  userService.activeUser(id);
-		 return new ModelAndView("redirect:/admin-user?page=1&limit=5");
+		  mav.addObject("message","Kích hoạt tài khoản thành công !");
+		  return mav;
 	}
 }

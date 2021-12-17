@@ -34,7 +34,7 @@
             </div>
               <div class="wrap-input100 validate-input">
                 <span class="label-input100">Ảnh đại diện</span>
-                <input class="input100" asp-for="ThumbnailImage" id="uploadImage" type="file">
+                <input class="input100" asp-for="ThumbnailImage" id="uploadImage" name="uploadImage" type="file">
                  <input type="hidden" class="form-control" id="thumbnail" name ="thumbnail" >
    				 <input type="hidden" class="form-control" id="base64" name="base64">
                 <span class="focus-input100"></span>
@@ -127,7 +127,71 @@
 	 
 	    });
 	
+	    //VALIDATOR
 	    
+	    
+	      $("#formSubmit").validate({
+		 rules: {
+			 name: {
+			      required: true
+					 },
+		    content: {
+			      required: true
+					 },
+			originalPrice: {
+				 required: true,
+					     
+					    },
+			 price: {
+				required: true,
+						
+						 },
+			stock: {
+				required: true
+				},		
+			acreage: {
+					required: true
+					},	
+					uploadImage:{
+						required: true
+					}	
+			
+		},
+			 
+			messages:{
+				
+				name: {
+					required: "Tên loại phòng không được bỏ trống",
+					
+					 },
+			    content: {
+				      required: "Nội dung không được bỏ trống"
+						 },
+				originalPrice: {
+					 required: "Giá tiền gốc không được bỏ trống",
+						     
+						    },
+				 price: {
+					required: "Giá tiền hiện tại không được bỏ trống",
+							
+							 },
+				stock: {
+					required: "Số lượng không được bỏ trống"
+					},		
+				acreage: {
+						required: "Diện tích không được bỏ trống"
+						},	
+						uploadImage: {
+					required: "Bạn chưa chọn hình"
+							},			
+						
+			},
+	 
+		 submitHandler: function(form) {
+			 form.submit();
+		    
+		  }
+		 });
 	    
 	</script>
 </body>

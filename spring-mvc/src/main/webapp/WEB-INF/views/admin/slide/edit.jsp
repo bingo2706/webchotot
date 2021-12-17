@@ -49,7 +49,30 @@
 </form:form>
 </div>
 	<script type="text/javascript">
-	
+	$("#formSubmit").validate({
+		 rules: {
+			 name: {
+			      required: true
+			    },
+			 description:{
+				required: true
+			},	
+		},
+			messages:{
+				name:{
+					required:"Bạn chưa nhập tên trình chiếu"
+				},
+				description:{
+					required:"Bạn chưa nhập mô tả trình chiếu"
+				},
+				
+			},
+	 
+		 submitHandler: function(form) {
+			 form.submit();
+		    
+		  }
+		 });
 
 	</script>
 </body>

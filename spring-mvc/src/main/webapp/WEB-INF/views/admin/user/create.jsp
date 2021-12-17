@@ -125,7 +125,60 @@
 		 document.querySelector("#base64").value = base64;
 	       
 	    });
-	
+	 $("#formSubmit").validate({
+		 rules: {
+			 fullname: {
+			      required: true
+			    },
+			 username:{
+				required: true
+			},
+			password: {
+				  required: true,
+				  minlength:6
+			},
+			email: {
+			      required: true,
+			      email:true
+			    },
+			phonenumber: {
+				   required: true,
+				   minlength:10
+				 },
+				 dob: {
+					   required: true
+					 },
+		},
+			 
+			messages:{
+				fullname:{
+					required:"Bạn chưa nhập họ tên"
+				},
+				username:{
+					required:"Bạn chưa nhập tên đăng nhập"
+				},
+				password: {
+					  required: "Bạn chưa nhập mật khẩu",
+					  minlength:"Mật khẩu tối thiểu 6 kí tự"
+				},
+				email: {
+				      required: "Bạn chưa nhập email",
+				      email:"Email chưa đúng định dạng"
+				    },
+				phonenumber: {
+					  required: "Bạn chưa nhập số điện thoại",
+					  minlength:"Số điện thoại tối thiểu 10 số"
+					    },   
+				 dob: {
+						required: "Bạn chưa chọn ngày sinh"
+						},
+			},
+	 
+		 submitHandler: function(form) {
+			 form.submit();
+		    
+		  }
+		 });
 	</script>
 </body>
 </html>

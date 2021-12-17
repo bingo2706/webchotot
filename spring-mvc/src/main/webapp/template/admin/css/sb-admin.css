@@ -10922,3 +10922,6 @@ body.sidebar-toggled footer.sticky-footer {
   .icon-close{
   	color:red;
   }
+  .error{
+  	color:red;
+  }

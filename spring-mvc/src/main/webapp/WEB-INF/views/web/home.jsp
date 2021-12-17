@@ -65,7 +65,7 @@
 
         
        </div>
-       <div class="box-product">
+       <div class="box-product" style="padding-bottom: 20px">
         <p class="category__heading">Sản phẩm nổi bật</p>
        
             <div class="product-slide carousel-nav-center owl-carousel">
@@ -84,6 +84,7 @@
                             <p class="box-item__size">${item.listDetail.get(0).acreage } m2</p>
                             <p style="text-decoration: line-through;color: #8d8a8a; font-weight: 500; font-size: 1.2rem;" class="box-item-oriPrice"><f:formatNumber value="${item.listDetail.get(0).originalPrice }" type="currency"/> đ/tháng</p>
                             <p class="box-item__price"><f:formatNumber value="${item.listDetail.get(0).price }" type="currency"/> đ/tháng</p>
+                       	    <p class="box-item__size"><i class="fas fa-map-marked-alt"></i> ${item.address.split(",")[2] }</p>
                         </div>
                     </div>
                 </div>
@@ -111,6 +112,7 @@
                             <p class="box-item__size">${item.listDetail.get(0).acreage } m2</p>
                             <p style="text-decoration: line-through;color: #8d8a8a; font-weight: 500; font-size: 1.2rem;" class="box-item-oriPrice"><f:formatNumber value="${item.listDetail.get(0).originalPrice }" type="currency"/> đ/tháng</p>
                             <p class="box-item__price"><f:formatNumber value="${item.listDetail.get(0).price }" type="currency"/> đ/tháng</p>
+                            <p class="box-item__size"><i class="fas fa-map-marked-alt"></i> ${item.address.split(",")[2] }</p>
                         </div>
                     </div>
                 </div>

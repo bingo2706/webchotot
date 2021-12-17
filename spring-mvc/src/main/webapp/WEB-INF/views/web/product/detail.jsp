@@ -198,30 +198,30 @@ input.input100 {
 			      <h2>Để lại thông tin của quý khách</h2>
 			    </div>
 			    <div class="modal-body">
-			     <form action="/order" method="post" class="contact100-form validate-form">
-					<div class="wrap-input100 validate-input">
+			     <form id="formSubmit1" action="/order" method="post" >
+					<div class="wrap-input100 ">
 						<span class="label-input100">Họ và tên</span> <input
-							class="input100" asp-for="Name" id="title" name="fullname" placeholder="Nhập họ và tên của bạn"
-							/> <span class="focus-input100"></span>
-						<span asp-validation-for="Name" class="text-danger"></span>
+							class="input100"  name="fullname" placeholder="Nhập họ và tên của bạn"
+							/> 
+						
 					</div>
-					<div class="wrap-input100 validate-input">
+					<div class="wrap-input100">
 						<span class="label-input100">Email</span> <input
-							class="input100" asp-for="Name" id="title" name="email" placeholder="Nhập email của bạn"
-							/> <span class="focus-input100"></span>
-						<span asp-validation-for="Name" class="text-danger"></span>
+							class="input100"   name="email" placeholder="Nhập email của bạn"
+							/> 
+						
 					</div>
-					<div class="wrap-input100 validate-input">
+					<div class="wrap-input100">
 						<span class="label-input100">Số điện thoại</span> <input
-							class="input100" asp-for="Name" id="title" name="phonenumber" placeholder="Nhập số điện thoại của bạn"
+							class="input100" type="number"  name="phonenumber" placeholder="Nhập số điện thoại của bạn"
 							/> <span class="focus-input100"></span>
-						<span asp-validation-for="Name" class="text-danger"></span>
+						
 					</div>
-					<div class="wrap-input100 validate-input">
+					<div class="wrap-input100">
 						<span class="label-input100">Địa chỉ</span> <input
-							class="input100" asp-for="Name" id="title" name="address" placeholder="Nhập địa chỉ của bạn"
+							class="input100"   name="address" placeholder="Nhập địa chỉ của bạn"
 							/> <span class="focus-input100"></span>
-						<span asp-validation-for="Name" class="text-danger"></span>
+						
 					</div>
 					<input type="hidden" name="productId" value=${model.id } />
 					<button style="margin-bottom:10px" class="btn btn-red">Gửi thông tin</button>
@@ -234,6 +234,14 @@ input.input100 {
 	
       
        <script>
+       
+       const queryString = window.location.search;
+		const urlParams = new URLSearchParams(queryString);
+		const message = urlParams.get('message')
+		if(message){
+			alert(message)
+		}
+       
       var nameImg = document.querySelector("#nameImg").value;
       
   
@@ -318,26 +326,7 @@ input.input100 {
     //       addNew(data);
            
        });
-       $('.edit-button').click(function (e) {
-       	 e.preventDefault();    
-       });
-       function btn_editFunc(id){
-       	var data = {};
-       	var formData = $('#formEdit_'+id).serializeArray();
-           $.each(formData, function (i, v) {
-               data[""+v.name+""] = v.value;
-           });
-           
-           updateNew(data);
-       }
-       function editClick(id){
-       	 var data = {};
-            var formData = $('#editForm_'+id).serializeArray();
-            $.each(formData, function (i, v) {
-                data[""+v.name+""] = v.value;
-            });     
-            addNew(data);
-       }
+    
  
        
    	function deleteFunc(id){
@@ -363,6 +352,7 @@ input.input100 {
     // When the user clicks the button, open the modal 
 	    btn.onclick = function() {
 	      modal.style.display = "block";
+	      
 	    }
 
     // When the user clicks on <span> (x), close the modal
@@ -376,6 +366,54 @@ input.input100 {
         modal.style.display = "none";
       }
     }
+    
+    
+   
+    $("#formSubmit1").validate({
+ 		 rules: {
+ 			 fullname: {
+ 			      required: true
+ 			    },
+ 			
+ 			
+ 			email: {
+ 			      required: true,
+ 			      email:true
+ 			    },
+ 			phonenumber: {
+ 				   required: true,
+ 				   minlength:10
+ 				 },
+ 				 address: {
+ 					   required: true
+ 					 },
+ 		},
+ 			 
+ 			messages:{
+ 				fullname:{
+ 					required:"Bạn chưa nhập họ tên"
+ 				},
+ 			
+ 				email: {
+ 				      required: "Bạn chưa nhập email",
+ 				      email:"Email chưa đúng định dạng"
+ 				    },
+ 				phonenumber: {
+ 					  required: "Bạn chưa nhập số điện thoại",
+ 					  minlength:"Số điện thoại tối thiểu 10 số"
+ 					    },   
+ 				 address: {
+ 						required: "Bạn chưa nhập địa chỉ"
+ 						},
+ 			},
+ 	 
+ 		 submitHandler: function(form) {
+ 			 form.submit();
+ 		    
+ 		  }
+ 		 });
+ 
+    
      </script>
 </body>
 </html>

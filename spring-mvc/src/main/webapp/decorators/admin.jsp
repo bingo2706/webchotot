@@ -33,6 +33,7 @@
 	<script src="<c:url value='/template/admin/js/demo/datatables-demo.js'/>"></script>
 	<script src="<c:url value='/template/admin/js/demo/chart-area-demo.js'/>"></script>
 	<script src="<c:url value='/template/paging/jquery.twbsPagination.js'/>"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
 </head>
 <body id="page-top">
 

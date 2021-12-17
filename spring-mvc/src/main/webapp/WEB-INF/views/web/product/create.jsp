@@ -45,7 +45,7 @@
             <c:if test="${empty model.id }">
               <div class="wrap-input100 validate-input">
                 <span class="label-input100">Ảnh đại diện</span>
-                <input class="input100" asp-for="ThumbnailImage" id="uploadImage"  type="file">
+                <input class="input100" asp-for="ThumbnailImage" id="uploadImage" name="uploadImage"  type="file">
                 <input type="hidden" class="form-control" id="thumbnail" name ="thumbnail" >
    				 <input type="hidden" class="form-control" id="base64" name="base64">
                 <span class="focus-input100"></span>
@@ -233,12 +233,16 @@
 			acreage: {
 					required: true
 					},	
-					calc_shipping_provinces: {
-						required: true
+			calc_shipping_provinces: {
+				required: true
 						},		
-						calc_shipping_district: {
-							required: true
-							},	
+		calc_shipping_district: {
+					required: true
+							},
+		uploadImage: {
+				required: true
+								},
+						
 		},
 			 
 			messages:{
@@ -280,7 +284,10 @@
 							},		
 							calc_shipping_district: {
 								required: "Quận huyện không được bỏ trống"
-								},	
+								},
+								uploadImage: {
+									required: "Bạn chưa chọn hình"
+									},	
 			},
 	 
 		 submitHandler: function(form) {

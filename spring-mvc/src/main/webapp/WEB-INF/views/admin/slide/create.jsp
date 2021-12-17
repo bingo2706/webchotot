@@ -44,7 +44,7 @@
  
   <div class="form-group">
     <label for="thumbnail">Hình đại diện</label>
-    <input type="file" class="form-control" id="uploadImage" >
+    <input type="file" class="form-control" id="uploadImage" name="uploadImage" >
     <input type="hidden" class="form-control" id="thumbnail" name ="thumbnail" >
     <input type="hidden" class="form-control" id="base64" name="base64">
   </div>
@@ -86,7 +86,36 @@
 		 document.querySelector("#thumbnail").value = name;
 		 document.querySelector("#base64").value = base64;
 	    });
-
+	 $("#formSubmit").validate({
+		 rules: {
+			 name: {
+			      required: true
+			    },
+			 description:{
+				required: true
+			},	
+			uploadImage:{
+				required: true
+			}
+		},
+			messages:{
+				name:{
+					required:"Bạn chưa nhập tên trình chiếu"
+				},
+				description:{
+					required:"Bạn chưa nhập mô tả trình chiếu"
+				},
+				uploadImage:{
+					required:"Bạn chưa chọn hình"
+				},
+				
+			},
+	 
+		 submitHandler: function(form) {
+			 form.submit();
+		    
+		  }
+		 });
 	</script>
 </body>
 </html>
